@@ -1,8 +1,9 @@
 import { useAtom } from "jotai";
-import { disablePlayerFoodAtom } from "../../../utils/jotaiStore";
+import { disabledStatesAtom } from "../../../utils/jotaiStore";
 
 const FoodToken = ({ food }) => {
-  const [disableFood] = useAtom(disablePlayerFoodAtom);
+  const [disableState] = useAtom(disabledStatesAtom);
+  const disableFood = disableState.playerFood;
 
   const testFunc = () => {
     if (disableFood) {

@@ -1,9 +1,10 @@
-import { Forest, Grassland, Wetland } from "./";
+import { Forest, Grassland, Wetland, PlayABird } from "./";
 
 const HabitatMat = () => {
   return (
     <div>
       <p>Habitat Mat</p>
+      <PlayABird />
       <Forest />
       <Grassland />
       <Wetland />

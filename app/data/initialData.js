@@ -37,3 +37,14 @@ const createInitialHabitat = (resource, discard, startingQuantity) => {
 export const initialForest = createInitialHabitat("dice", "card", 1);
 export const initialGrassland = createInitialHabitat("eggs", "food", 2);
 export const initialWetland = createInitialHabitat("cards", "egg", 1);
+
+export const initialDisabledStates = {
+  birdDeck: true,
+  birdTray: true,
+  birdHand: true,
+  playerFood: true,
+  birdFeeder: true,
+  foodSupply: true,
+  eggSupply: true,
+  playerEggSupply: true,
+};

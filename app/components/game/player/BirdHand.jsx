@@ -13,7 +13,9 @@ const BirdHand = () => {
 
   return (
     <div>
-      <p>Player bird hand</p>
+      <div className="flex gap-5">
+        <p>Player bird hand</p>
+      </div>
       <div className="flex gap-3 flex-wrap">{birdHandContent}</div>
     </div>
   );

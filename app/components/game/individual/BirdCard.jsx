@@ -1,8 +1,9 @@
 import { useAtom } from "jotai";
-import { disableBirdCardAtom } from "../../../utils/jotaiStore";
+import { disabledStatesAtom } from "../../../utils/jotaiStore";
 
 const BirdCard = ({ bird }) => {
-  const [disableBirdCard] = useAtom(disableBirdCardAtom);
+  const [disableState] = useAtom(disabledStatesAtom);
+  const disableBirdCard = disableState.birdHand;
 
   const testFunc = () => {
     if (disableBirdCard) {
