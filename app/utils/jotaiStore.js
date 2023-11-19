@@ -8,6 +8,8 @@ import {
   initialGrassland,
   initialWetland,
   initialDisabledStates,
+  initialBirdFeeder,
+  initialDisableSelectionState,
 } from "../data/initialData";
 
 //initial player states
@@ -18,6 +20,7 @@ export const playerFoodSupplyAtom = atom(playerFoodSupply);
 //cards
 export const birdTrayAtom = atom(birdTray);
 export const birdDeckAtom = atom(birdDeck);
+export const birdDiscardAtom = atom([]);
 
 //habitats
 export const forestAtom = atom(initialForest);
@@ -28,9 +31,20 @@ export const wetlandAtom = atom(initialWetland);
 export const currentActionAtom = atom("");
 
 //habitat bird count
-export const forestBirdCountAtom = atom(0);
+export const forestBirdCountAtom = atom(1);
 export const grasslandBirdCountAtom = atom(0);
 export const wetlandBirdCountAtom = atom(0);
 
+//resource gain amount
+export const gainResourceQuantityAtom = atom(0);
+
+//bird Feeder
+export const birdFeederAtom = atom(initialBirdFeeder);
+
 //initial Disabled States
 export const disabledStatesAtom = atom(initialDisabledStates);
+export const disableSelectionAtom = atom(initialDisableSelectionState);
+
+//selected items
+export const selectedBirdsAtom = atom([]);
+export const selectedFoodAtom = atom([]);

@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import { rollBirdFeeder } from "../utils/gameFunctions/birdFeederFunctions";
 
 export const playerFoodSupply = [
   { type: "seed", id: nanoid() },
@@ -38,13 +39,27 @@ export const initialForest = createInitialHabitat("dice", "card", 1);
 export const initialGrassland = createInitialHabitat("eggs", "food", 2);
 export const initialWetland = createInitialHabitat("cards", "egg", 1);
 
+const initialRoll = rollBirdFeeder();
+const initialDisableRolling = initialRoll.every(
+  (die) => die.type === initialRoll[0].type
+);
+
+export const initialBirdFeeder = initialRoll;
+
 export const initialDisabledStates = {
   birdDeck: true,
   birdTray: true,
+
   birdHand: true,
   playerFood: true,
   birdFeeder: true,
   foodSupply: true,
   eggSupply: true,
   playerEggSupply: true,
+};
+
+export const initialDisableSelectionState = {
+  food: true,
+  bird: true,
+  birdFeeder: !initialDisableRolling,
 };

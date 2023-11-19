@@ -1,22 +1,20 @@
 import { useAtom } from "jotai";
 import {
-  disabledStatesAtom,
-  currentActionAtom,
   birdHandAtom,
+  currentActionAtom,
+  disabledStatesAtom,
   selectedBirdsAtom,
   disableSelectionAtom,
 } from "../../../utils/jotaiStore";
 import { cardSelection } from "../../../utils/gameFunctions/birdFunctions";
-import SelectedBirds from "../bird/SelectedBirds";
 
-const BirdCard = ({ bird }) => {
-  //disable states
+const SelectedBirdCard = ({ bird }) => {
   const [disableState] = useAtom(disabledStatesAtom);
   const disableBirdCard = disableState.birdHand;
   const [, setDisableSelection] = useAtom(disableSelectionAtom);
 
   //bird card states
-  const [birdHand, setBirdHand] = useAtom(birdHandAtom);
+  const [, setBirdHand] = useAtom(birdHandAtom);
   const [selectedBirds, setSelectedBirds] = useAtom(selectedBirdsAtom);
 
   //current action
@@ -28,14 +26,14 @@ const BirdCard = ({ bird }) => {
     } else {
       if (currentAction === "forest") {
         cardSelection(
-          birdHand,
+          selectedBirds,
           "common_name",
           bird.common_name,
-          setSelectedBirds,
-          setBirdHand
+          setBirdHand,
+          setSelectedBirds
         );
-        console.log(selectedBirds.length);
-        if (selectedBirds.length + 1 === 1) {
+
+        if (selectedBirds.length === 1) {
           setDisableSelection((prev) => ({ ...prev, bird: false }));
         } else {
           setDisableSelection((prev) => ({ ...prev, bird: true }));
@@ -56,4 +54,4 @@ const BirdCard = ({ bird }) => {
   );
 };
 
-export default BirdCard;
+export default SelectedBirdCard;
