@@ -7,6 +7,7 @@ import {
   gainResourceQuantityAtom,
   currentActionAtom,
   disableSelectionAtom,
+  birdTrayAtom,
 } from "../../../utils/jotaiStore";
 import { drawCard } from "../../../utils/gameFunctions/generalFunctions";
 import {
@@ -20,6 +21,7 @@ const BirdDeck = () => {
   const disableBirdDeck = disableState.birdDeck;
 
   const [birdDeck, setBirdDeck] = useAtom(birdDeckAtom);
+  const [, setBirdTray] = useAtom(birdTrayAtom);
   const [selectedBirds, setSelectedBirds] = useAtom(selectedBirdsAtom);
   const [birdHand, setBirdHand] = useAtom(birdHandAtom);
   const [resourceQuantity, setResourceQuantity] = useAtom(
@@ -38,6 +40,10 @@ const BirdDeck = () => {
 
         if (resourceQuantity - 1 === 0) {
           console.log("No more");
+          if (selectedBirds.length > 0) {
+            setBirdTray((prev) => [...prev, ...selectedBirds]);
+            setSelectedBirds([]);
+          }
           setDisableState(initialDisabledStates);
           setDisableSelection(initialDisableSelectionState);
         }
