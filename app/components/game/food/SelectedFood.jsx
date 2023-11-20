@@ -8,6 +8,7 @@ import {
   disabledStatesAtom,
   selectedBirdsAtom,
   birdHandAtom,
+  gainResourceQuantityAtom,
 } from "../../../utils/jotaiStore";
 import { SelectedFoodToken } from "../individual";
 import { saveSelection } from "../../../utils/gameFunctions/generalFunctions";
@@ -24,6 +25,7 @@ const SelectedFood = () => {
   const [birdFeeder] = useAtom(birdFeederAtom);
   const [selectedBirds, setSelectedBirds] = useAtom(selectedBirdsAtom);
   const [, setBirdHand] = useAtom(birdHandAtom);
+  const [, setResourceQuantity] = useAtom(gainResourceQuantityAtom);
 
   const [currentAction] = useAtom(currentActionAtom);
   const [disableSelection, setDisableSelection] = useAtom(disableSelectionAtom);
@@ -40,7 +42,6 @@ const SelectedFood = () => {
     currentAction === "forest" ? "save selection" : "discard selection";
 
   const testFunc = () => {
-    console.log(selectedBirds.length);
     if (selectedBirds.length > 0) {
       setBirdHand((prev) => [...prev, ...selectedBirds]);
       setSelectedBirds([]);
@@ -49,6 +50,7 @@ const SelectedFood = () => {
 
     setDisabledStates(initialDisabledStates);
     setDisableSelection(initialDisableSelectionState);
+    setResourceQuantity(0);
     enableRolling(birdFeeder, setDisableSelection);
   };
 

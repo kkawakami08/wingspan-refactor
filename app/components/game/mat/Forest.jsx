@@ -30,7 +30,7 @@ const Forest = () => {
     gainResourceQuantityAtom
   );
 
-  const activateForest = () => {
+  const activateHabitat = () => {
     setDisabledStates(initialDisabledStates);
     setCurrentAction("forest");
 
@@ -52,7 +52,7 @@ const Forest = () => {
   };
 
   return (
-    <div className="bg-emerald-500 py-5" onClick={activateForest}>
+    <div className="bg-emerald-500 py-5" onClick={activateHabitat}>
       <p>Forest</p>
       <p>
         Can currently gain {resourceQuantity}

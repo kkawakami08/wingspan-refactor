@@ -5,14 +5,26 @@ import {
   disableSelectionAtom,
   birdDiscardAtom,
   gainResourceQuantityAtom,
+  disabledStatesAtom,
   selectedFoodAtom,
+  birdHandAtom,
+  birdTrayAtom,
+  birdDeckAtom,
 } from "../../../utils/jotaiStore";
 import { SelectedBirdCard } from "../individual";
 import { saveSelection } from "../../../utils/gameFunctions/generalFunctions";
+import {
+  initialDisableSelectionState,
+  initialDisabledStates,
+} from "../../../data/initialData";
+import { refillTray } from "../../../utils/gameFunctions/birdFunctions";
 
 const SelectedBirds = () => {
   //get states from jotai
   const [selectedBirds, setSelectedBirds] = useAtom(selectedBirdsAtom);
+  const [birdDeck, setBirdDeck] = useAtom(birdDeckAtom);
+  const [birdTray, setBirdTray] = useAtom(birdTrayAtom);
+  const [, setBirdHand] = useAtom(birdHandAtom);
   const [currentAction] = useAtom(currentActionAtom);
   const [resourceQuantity, setResourceQuantity] = useAtom(
     gainResourceQuantityAtom
@@ -22,6 +34,7 @@ const SelectedBirds = () => {
 
   const [disableSelection, setDisableSelection] = useAtom(disableSelectionAtom);
   const disableBirdSelection = disableSelection.bird;
+  const [, setDisabledStates] = useAtom(disabledStatesAtom);
 
   //mapping over birdhand
   const selectedBirdsContent = selectedBirds.map((bird) => (
@@ -33,7 +46,6 @@ const SelectedBirds = () => {
 
   const testFunc = () => {
     if (currentAction === "forest") {
-      console.log("discarding");
       saveSelection(setBirdDiscard, setSelectedBirds, selectedBirds);
       setResourceQuantity((prev) => (prev += 1));
       setDisableSelection((prev) => ({ ...prev, bird: true }));
@@ -42,6 +54,12 @@ const SelectedBirds = () => {
       } else {
         setDisableSelection((prev) => ({ ...prev, food: true }));
       }
+    } else if (currentAction === "wetland") {
+      saveSelection(setBirdHand, setSelectedBirds, selectedBirds);
+      refillTray(birdTray, birdDeck, setBirdDeck, setBirdTray);
+      setDisabledStates(initialDisabledStates);
+      setDisableSelection(initialDisableSelectionState);
+      setResourceQuantity(0);
     } else {
       console.log("Another habitat");
     }
