@@ -1,3 +1,8 @@
+import {
+  initialDisableSelectionState,
+  initialDisabledStates,
+} from "../../data/initialData";
+
 export const checkEnoughFood = (playedBird, playerFoodSupply) => {
   //count how many foods required by future bird
   let playedBirdFoodCount = {};
@@ -106,4 +111,37 @@ export const checkEnoughFood = (playedBird, playerFoodSupply) => {
       }
     }
   }
+};
+
+export const updateHabitat = (
+  { setHabitat, habitatBirdCount, setHabitatBirdCount },
+
+  {
+    selectedBird,
+    setSelectedBirds,
+    setSelectedFood,
+    setDisableSelection,
+    setDisabledStates,
+    setCurrentAction,
+    setResourceQuantity,
+    setBirdFoodReq,
+    setSelectedHabitat,
+  }
+) => {
+  setHabitat((prev) => ({
+    ...prev,
+    [habitatBirdCount]: {
+      ...prev[habitatBirdCount],
+      bird: selectedBird,
+    },
+  }));
+  setSelectedFood([]);
+  setHabitatBirdCount((prev) => (prev += 1));
+  setSelectedBirds([]);
+  setDisableSelection(initialDisableSelectionState);
+  setDisabledStates(initialDisabledStates);
+  setCurrentAction("");
+  setResourceQuantity(0);
+  setBirdFoodReq({});
+  setSelectedHabitat("");
 };

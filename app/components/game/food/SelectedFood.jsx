@@ -11,7 +11,12 @@ import {
   gainResourceQuantityAtom,
   forestAtom,
   forestBirdCountAtom,
+  grasslandAtom,
+  grasslandBirdCountAtom,
+  wetlandAtom,
+  wetlandBirdCountAtom,
   birdFoodReqAtom,
+  selectedHabitatAtom,
 } from "../../../utils/jotaiStore";
 import { SelectedFoodToken } from "../individual";
 import { saveSelection } from "../../../utils/gameFunctions/generalFunctions";
@@ -20,11 +25,37 @@ import {
   initialDisabledStates,
   initialDisableSelectionState,
 } from "../../../data/initialData";
+import { updateHabitat } from "../../../utils/gameFunctions/habitatFunctions";
 
 const SelectedFood = () => {
   //get states from jotai
   const [, setForest] = useAtom(forestAtom);
   const [forestBirdCount, setForestBirdCount] = useAtom(forestBirdCountAtom);
+  const [, setGrassland] = useAtom(grasslandAtom);
+  const [grasslandBirdCount, setGrasslandBirdCount] = useAtom(
+    grasslandBirdCountAtom
+  );
+  const [, setWetland] = useAtom(wetlandAtom);
+  const [wetlandBirdCount, setWetlandBirdCount] = useAtom(wetlandBirdCountAtom);
+
+  const forestHabitat = {
+    setHabitat: setForest,
+    habitatBirdCount: forestBirdCount,
+    setHabitatBirdCount: setForestBirdCount,
+  };
+  const grasslandHabitat = {
+    setHabitat: setGrassland,
+    habitatBirdCount: grasslandBirdCount,
+    setHabitatBirdCount: setGrasslandBirdCount,
+  };
+  const wetlandHabitat = {
+    setHabitat: setWetland,
+    habitatBirdCount: wetlandBirdCount,
+    setHabitatBirdCount: setWetlandBirdCount,
+  };
+
+  const [selectedHabitat, setSelectedHabitat] = useAtom(selectedHabitatAtom);
+
   const [selectedFood, setSelectedFood] = useAtom(selectedFoodAtom);
   const [, setPlayerFood] = useAtom(playerFoodSupplyAtom);
   const [birdFeeder] = useAtom(birdFeederAtom);
@@ -38,6 +69,18 @@ const SelectedFood = () => {
   const [, setDisabledStates] = useAtom(disabledStatesAtom);
 
   const disableFoodSelection = disableSelection.food;
+
+  const updateHabitatObject = {
+    selectedBird: selectedBirds[0],
+    setSelectedBirds,
+    setSelectedFood,
+    setDisableSelection,
+    setDisabledStates,
+    setCurrentAction,
+    setResourceQuantity,
+    setBirdFoodReq,
+    setSelectedHabitat,
+  };
 
   //mapping over birdhand
   const selectedFoodContent = selectedFood.map((food) => (
@@ -72,7 +115,7 @@ const SelectedFood = () => {
       let continueAction = false;
       console.log(birdFoodReq);
       if (birdFoodReq.wild) {
-        console.log(`bird uses ${birdFoodReq.wild} tokens`);
+        console.log(`bird uses ${birdFoodReq.wild} wild tokens`);
         if (foodCount.length === birdFoodReq.wild) {
           console.log("you have enough tokens. placed bird");
           continueAction = true;
@@ -90,21 +133,17 @@ const SelectedFood = () => {
       }
 
       if (continueAction) {
-        setSelectedFood([]);
-        setForest((prev) => ({
-          ...prev,
-          [forestBirdCount]: {
-            ...prev[forestBirdCount],
-            bird: selectedBirds[0],
-          },
-        }));
-        setForestBirdCount((prev) => (prev += 1));
-        setSelectedBirds([]);
-        setDisableSelection(initialDisableSelectionState);
-        setDisabledStates(initialDisabledStates);
-        setCurrentAction("");
-        setResourceQuantity(0);
-        setBirdFoodReq({});
+        switch (selectedHabitat) {
+          case "forest":
+            updateHabitat(forestHabitat, updateHabitatObject);
+            break;
+          case "grassland":
+            updateHabitat(grasslandHabitat, updateHabitatObject);
+            break;
+          case "wetland":
+            updateHabitat(wetlandHabitat, updateHabitatObject);
+            break;
+        }
       } else {
         console.log("Not enough tokens");
       }

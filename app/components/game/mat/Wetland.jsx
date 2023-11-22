@@ -7,6 +7,7 @@ import {
   wetlandBirdCountAtom,
   gainResourceQuantityAtom,
   disableSelectionAtom,
+  selectedHabitatAtom,
 } from "../../../utils/jotaiStore";
 
 import {
@@ -24,8 +25,9 @@ const wetland = () => {
   ));
 
   //set current action
-  const [, setCurrentAction] = useAtom(currentActionAtom);
+  const [currentAction, setCurrentAction] = useAtom(currentActionAtom);
   const currentSpace = wetland[birdCount];
+  const [, setSelectedHabitat] = useAtom(selectedHabitatAtom);
 
   //disabled states
   const [, setDisabledStates] = useAtom(disabledStatesAtom);
@@ -36,30 +38,40 @@ const wetland = () => {
   );
 
   const activateHabitat = () => {
-    setDisabledStates(initialDisabledStates);
-    setDisableSelection(initialDisableSelectionState);
-    setCurrentAction("wetland");
-
-    if (currentSpace.action.discard !== "none") {
+    if (currentAction === "playABird") {
+      console.log("Selected wetland. pick a bird now");
+      setSelectedHabitat("wetland");
       setDisabledStates((draft) => ({
         ...draft,
-        birdDeck: false,
-        birdTray: false,
-        playerEggSupply: false,
-      }));
 
-      console.log(
-        "Current action is forest: Birddeck, birdtray, playereggsupply enabled"
-      );
+        birdHand: false,
+      }));
     } else {
-      setDisabledStates((draft) => ({
-        ...draft,
-        birdDeck: false,
-        birdTray: false,
-      }));
-      console.log("Current action is forest: birddeck, birdtray enabled");
+      setDisabledStates(initialDisabledStates);
+      setDisableSelection(initialDisableSelectionState);
+      setCurrentAction("wetland");
+
+      if (currentSpace.action.discard !== "none") {
+        setDisabledStates((draft) => ({
+          ...draft,
+          birdDeck: false,
+          birdTray: false,
+          playerEggSupply: false,
+        }));
+
+        console.log(
+          "Current action is forest: Birddeck, birdtray, playereggsupply enabled"
+        );
+      } else {
+        setDisabledStates((draft) => ({
+          ...draft,
+          birdDeck: false,
+          birdTray: false,
+        }));
+        console.log("Current action is forest: birddeck, birdtray enabled");
+      }
+      setResourceQuantity(currentSpace.action.quantity);
     }
-    setResourceQuantity(currentSpace.action.quantity);
   };
 
   return (

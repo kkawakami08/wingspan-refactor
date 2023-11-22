@@ -21,21 +21,9 @@ const PlayABird = () => {
 
   const activateHabitat = () => {
     setDisabledStates(initialDisabledStates);
-    // setDisableSelection((draft) => ({
-    //   ...draft,
 
-    //   bird: false
-    // }));
     setCurrentAction("playABird");
     console.log("Current action:: Play a bird. Select a habitat");
-    // console.log("birdhand, food supply, egg supply enabled");
-    // setDisabledStates((draft) => ({
-    //   ...draft,
-
-    //   birdHand: false,
-    //   foodSupply: false,
-    //   playerEggSupply: false,
-    // }));
   };
 
   return (
