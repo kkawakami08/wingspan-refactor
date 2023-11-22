@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import { rollBirdFeeder } from "../utils/gameFunctions/birdFeederFunctions";
 
 export const playerFoodSupply = [
-  { type: "seed", id: nanoid() },
+  { type: "fruit", id: nanoid() },
   { type: "fruit", id: nanoid() },
   { type: "fish", id: nanoid() },
   { type: "rodent", id: nanoid() },
@@ -62,4 +62,5 @@ export const initialDisableSelectionState = {
   food: true,
   bird: true,
   birdFeeder: !initialDisableRolling,
+  playBirdSelection: true,
 };

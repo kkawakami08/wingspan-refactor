@@ -5,6 +5,7 @@ import {
   birdFeederAtom,
   gainResourceQuantityAtom,
   disableSelectionAtom,
+  playerFoodSupplyAtom,
 } from "../../../utils/jotaiStore";
 import { foodSelection } from "../../../utils/gameFunctions/birdFeederFunctions";
 
@@ -14,16 +15,38 @@ const SelectedFoodToken = ({ food }) => {
 
   const [selectedFood, setSelectedFood] = useAtom(selectedFoodAtom);
   const [birdFeeder, setBirdFeeder] = useAtom(birdFeederAtom);
+  const [, setPlayerFoodSupply] = useAtom(playerFoodSupplyAtom);
 
   const [resourceQuantity] = useAtom(gainResourceQuantityAtom);
   const [, setDisableSelection] = useAtom(disableSelectionAtom);
 
   const testFunc = () => {
-    foodSelection(selectedFood, setBirdFeeder, setSelectedFood, food.id);
-    if (selectedFood.length === resourceQuantity) {
-      setDisableSelection((prev) => ({ ...prev, food: false }));
+    if (currentAction === "playABird") {
+      foodSelection(
+        selectedFood,
+        setPlayerFoodSupply,
+        setSelectedFood,
+        food.id
+      );
+
+      if (selectedFood.length === resourceQuantity) {
+        setDisableSelection((prev) => ({
+          ...prev,
+          food: false,
+        }));
+      } else {
+        setDisableSelection((prev) => ({
+          ...prev,
+          food: true,
+        }));
+      }
     } else {
-      setDisableSelection((prev) => ({ ...prev, food: true }));
+      foodSelection(selectedFood, setBirdFeeder, setSelectedFood, food.id);
+      if (selectedFood.length === resourceQuantity) {
+        setDisableSelection((prev) => ({ ...prev, food: false }));
+      } else {
+        setDisableSelection((prev) => ({ ...prev, food: true }));
+      }
     }
   };
 

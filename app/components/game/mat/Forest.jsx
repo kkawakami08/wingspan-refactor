@@ -6,6 +6,7 @@ import {
   forestAtom,
   gainResourceQuantityAtom,
   forestBirdCountAtom,
+  selectedHabitatAtom,
 } from "../../../utils/jotaiStore";
 import { initialDisabledStates } from "../../../data/initialData";
 
@@ -19,7 +20,7 @@ const Forest = () => {
   ));
 
   //set current action
-  const [, setCurrentAction] = useAtom(currentActionAtom);
+  const [currentAction, setCurrentAction] = useAtom(currentActionAtom);
   const currentSpace = forest[birdCount];
 
   //disabled states
@@ -29,26 +30,40 @@ const Forest = () => {
   const [resourceQuantity, setResourceQuantity] = useAtom(
     gainResourceQuantityAtom
   );
+  // console.log(forest);
+
+  //select forest habitat for play a bird
+  const [, setHabitat] = useAtom(selectedHabitatAtom);
 
   const activateHabitat = () => {
-    setDisabledStates(initialDisabledStates);
-    setCurrentAction("forest");
-
-    if (currentSpace.action.discard !== "none") {
+    if (currentAction === "playABird") {
+      console.log("Selected forest. pick a bird now");
+      setHabitat("forest");
       setDisabledStates((draft) => ({
         ...draft,
-        birdFeeder: false,
+
         birdHand: false,
       }));
-      console.log("Current action is forest: Birdfeeder, BirdHand enabled");
     } else {
-      setDisabledStates((draft) => ({
-        ...draft,
-        birdFeeder: false,
-      }));
-      console.log("Current action is forest: Birdfeeder enabled");
+      setDisabledStates(initialDisabledStates);
+      setCurrentAction("forest");
+
+      if (currentSpace.action.discard !== "none") {
+        setDisabledStates((draft) => ({
+          ...draft,
+          birdFeeder: false,
+          birdHand: false,
+        }));
+        console.log("Current action is forest: Birdfeeder, BirdHand enabled");
+      } else {
+        setDisabledStates((draft) => ({
+          ...draft,
+          birdFeeder: false,
+        }));
+        console.log("Current action is forest: Birdfeeder enabled");
+      }
+      setResourceQuantity(currentSpace.action.quantity);
     }
-    setResourceQuantity(currentSpace.action.quantity);
   };
 
   return (

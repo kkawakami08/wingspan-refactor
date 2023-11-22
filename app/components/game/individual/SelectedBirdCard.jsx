@@ -22,6 +22,13 @@ const SelectedBirdCard = ({ bird }) => {
   const [currentAction] = useAtom(currentActionAtom);
   const [resourceQuantity] = useAtom(gainResourceQuantityAtom);
 
+  //food
+  const foodReqContent = bird.food.map((food, index) => (
+    <p key={index} className="bg-cyan-900 text-white p-2 rounded-lg">
+      {food}
+    </p>
+  ));
+
   const testFunc = () => {
     if (currentAction === "forest") {
       cardSelection(
@@ -51,6 +58,23 @@ const SelectedBirdCard = ({ bird }) => {
       } else {
         setDisableSelection((prev) => ({ ...prev, bird: true }));
       }
+    } else if (currentAction === "playABird") {
+      if (disableSelection.playBirdSelection) {
+        cardSelection(
+          selectedBirds,
+          "common_name",
+          bird.common_name,
+          setBirdHand,
+          setSelectedBirds
+        );
+        if (selectedBirds.length === 1) {
+          setDisableSelection((prev) => ({ ...prev, bird: false }));
+        } else {
+          setDisableSelection((prev) => ({ ...prev, bird: true }));
+        }
+      } else {
+        console.log("disabled");
+      }
     } else {
       console.log("Cannot select birds");
     }
@@ -62,6 +86,7 @@ const SelectedBirdCard = ({ bird }) => {
       onClick={testFunc}
     >
       <p>{bird.common_name}</p>
+      <div className="flex gap-3">{foodReqContent}</div>
     </div>
   );
 };

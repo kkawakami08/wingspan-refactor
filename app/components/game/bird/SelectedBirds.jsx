@@ -10,6 +10,10 @@ import {
   birdHandAtom,
   birdTrayAtom,
   birdDeckAtom,
+  playerFoodSupplyAtom,
+  birdFoodReqAtom,
+  forestAtom,
+  forestBirdCountAtom,
 } from "../../../utils/jotaiStore";
 import { SelectedBirdCard } from "../individual";
 import { saveSelection } from "../../../utils/gameFunctions/generalFunctions";
@@ -18,6 +22,7 @@ import {
   initialDisabledStates,
 } from "../../../data/initialData";
 import { refillTray } from "../../../utils/gameFunctions/birdFunctions";
+import { checkEnoughFood } from "../../../utils/gameFunctions/habitatFunctions";
 
 const SelectedBirds = () => {
   //get states from jotai
@@ -25,12 +30,16 @@ const SelectedBirds = () => {
   const [birdDeck, setBirdDeck] = useAtom(birdDeckAtom);
   const [birdTray, setBirdTray] = useAtom(birdTrayAtom);
   const [, setBirdHand] = useAtom(birdHandAtom);
-  const [currentAction] = useAtom(currentActionAtom);
+  const [playerFoodSupply, setPlayerFoodSupply] = useAtom(playerFoodSupplyAtom);
+  const [currentAction, setCurrentAction] = useAtom(currentActionAtom);
   const [resourceQuantity, setResourceQuantity] = useAtom(
     gainResourceQuantityAtom
   );
   const [selectedFood] = useAtom(selectedFoodAtom);
   const [, setBirdDiscard] = useAtom(birdDiscardAtom);
+  const [, setBirdFoodReq] = useAtom(birdFoodReqAtom);
+  const [, setForest] = useAtom(forestAtom);
+  const [forestBirdCount, setForestBirdCount] = useAtom(forestBirdCountAtom);
 
   const [disableSelection, setDisableSelection] = useAtom(disableSelectionAtom);
   const disableBirdSelection = disableSelection.bird;
@@ -60,6 +69,33 @@ const SelectedBirds = () => {
       setDisabledStates(initialDisabledStates);
       setDisableSelection(initialDisableSelectionState);
       setResourceQuantity(0);
+    } else if (currentAction === "playABird") {
+      const birdCheck = checkEnoughFood(
+        selectedBirds[0].food,
+        playerFoodSupply
+      );
+      console.log(birdCheck);
+      if (birdCheck.canPlay) {
+        console.log("select food to discard");
+        let currentCount = selectedBirds[0].food.length;
+        if (birdCheck.double) {
+          currentCount += birdCheck.tokenReplacement;
+        }
+        setResourceQuantity(currentCount);
+        setBirdFoodReq((prev) => ({
+          ...birdCheck,
+        }));
+        setDisableSelection((prev) => ({
+          ...prev,
+          bird: true,
+        }));
+        setDisabledStates((prev) => ({
+          ...prev,
+          playerFood: false,
+        }));
+      } else {
+        console.log("can't play this bird. select a different one");
+      }
     } else {
       console.log("Another habitat");
     }
