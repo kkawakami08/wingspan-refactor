@@ -7,11 +7,11 @@ import {
   disableSelectionAtom,
   gainResourceQuantityAtom,
 } from "../../../utils/jotaiStore";
-import { cardSelection } from "../../../utils/gameFunctions/birdFunctions";
+import { cardSelection } from "../../../utils/gameFunctions/generalFunctions";
 
 const SelectedBirdCard = ({ bird }) => {
+  //disable states
   const [disableSelection, setDisableSelection] = useAtom(disableSelectionAtom);
-  const disableBirdSelectionCard = disableSelection.bird;
 
   //bird card states
   const [, setBirdHand] = useAtom(birdHandAtom);
@@ -20,6 +20,8 @@ const SelectedBirdCard = ({ bird }) => {
 
   //current action
   const [currentAction] = useAtom(currentActionAtom);
+
+  //resource quantity
   const [resourceQuantity] = useAtom(gainResourceQuantityAtom);
 
   //food
@@ -29,7 +31,7 @@ const SelectedBirdCard = ({ bird }) => {
     </p>
   ));
 
-  const testFunc = () => {
+  const selectedBirdCardClick = () => {
     if (currentAction === "forest") {
       cardSelection(
         selectedBirds,
@@ -83,7 +85,7 @@ const SelectedBirdCard = ({ bird }) => {
   return (
     <div
       className="bg-cyan-500 p-5 rounded-lg border-2 border-cyan-900"
-      onClick={testFunc}
+      onClick={selectedBirdCardClick}
     >
       <p>{bird.common_name}</p>
       <div className="flex gap-3">{foodReqContent}</div>

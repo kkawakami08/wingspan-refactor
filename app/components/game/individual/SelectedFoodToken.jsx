@@ -13,14 +13,18 @@ const SelectedFoodToken = ({ food }) => {
   //current action
   const [currentAction] = useAtom(currentActionAtom);
 
+  //food states
   const [selectedFood, setSelectedFood] = useAtom(selectedFoodAtom);
   const [birdFeeder, setBirdFeeder] = useAtom(birdFeederAtom);
   const [, setPlayerFoodSupply] = useAtom(playerFoodSupplyAtom);
 
+  //resource quantity
   const [resourceQuantity] = useAtom(gainResourceQuantityAtom);
+
+  //disable states
   const [, setDisableSelection] = useAtom(disableSelectionAtom);
 
-  const testFunc = () => {
+  const selectedFoodTokenClick = () => {
     if (currentAction === "playABird") {
       foodSelection(
         selectedFood,
@@ -51,7 +55,10 @@ const SelectedFoodToken = ({ food }) => {
   };
 
   return (
-    <div className="bg-indigo-400 p-3 rounded-lg text-white" onClick={testFunc}>
+    <div
+      className="bg-indigo-400 p-3 rounded-lg text-white"
+      onClick={selectedFoodTokenClick}
+    >
       <p>{food.type}</p>
     </div>
   );

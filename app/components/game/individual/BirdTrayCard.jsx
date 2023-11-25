@@ -7,20 +7,25 @@ import {
   birdTrayAtom,
   gainResourceQuantityAtom,
 } from "../../../utils/jotaiStore";
-import { cardSelection } from "../../../utils/gameFunctions/birdFunctions";
+import { cardSelection } from "../../../utils/gameFunctions/generalFunctions";
 
 const BirdTrayCard = ({ bird }) => {
+  //bird states
   const [birdTray, setBirdTray] = useAtom(birdTrayAtom);
   const [selectedBirds, setSelectedBirds] = useAtom(selectedBirdsAtom);
 
+  //disabled states
   const [disableState] = useAtom(disabledStatesAtom);
   const disableBirdTray = disableState.birdTray;
   const [, setDisableSelection] = useAtom(disableSelectionAtom);
+
+  //current action
   const [currentAction] = useAtom(currentActionAtom);
 
+  //resource quantity
   const [resourceQuantity] = useAtom(gainResourceQuantityAtom);
 
-  const testFunc = () => {
+  const birdTrayCardClick = () => {
     if (disableBirdTray) {
       console.log("Cant click");
     } else {
@@ -46,7 +51,7 @@ const BirdTrayCard = ({ bird }) => {
   return (
     <div
       className="bg-cyan-500 p-5 rounded-lg border-2 border-cyan-900"
-      onClick={testFunc}
+      onClick={birdTrayCardClick}
     >
       <p>{bird.common_name}</p>
     </div>

@@ -9,15 +9,17 @@ import {
   disableSelectionAtom,
   selectedHabitatAtom,
 } from "../../../utils/jotaiStore";
-
+import { activateHabitat } from "../../../utils/gameFunctions/habitatFunctions";
 import {
   initialDisabledStates,
   initialDisableSelectionState,
 } from "../../../data/initialData";
 
 const wetland = () => {
+  //wetland state
   const [wetland] = useAtom(wetlandAtom);
   const [birdCount] = useAtom(wetlandBirdCountAtom);
+  const currentSpace = wetland[birdCount];
 
   const wetlandArray = Object.keys(wetland);
   const wetlandContent = wetlandArray.map((space) => (
@@ -26,56 +28,54 @@ const wetland = () => {
 
   //set current action
   const [currentAction, setCurrentAction] = useAtom(currentActionAtom);
-  const currentSpace = wetland[birdCount];
-  const [, setSelectedHabitat] = useAtom(selectedHabitatAtom);
+
+  //select habitat for play a bird
+  const [, setHabitat] = useAtom(selectedHabitatAtom);
 
   //disabled states
-  const [, setDisabledStates] = useAtom(disabledStatesAtom);
+  const [disabledStates, setDisabledStates] = useAtom(disabledStatesAtom);
   const [, setDisableSelection] = useAtom(disableSelectionAtom);
+  const wetlandDisable = disabledStates.habitats;
 
+  //discard for +1 resource
+  const wetlandDiscardStates = {
+    habitats: true,
+    birdDeck: false,
+    birdTray: false,
+    playerEggSupply: false,
+  };
+  //enable when activated
+  const wetlandEnableState = {
+    habitats: true,
+    birdDeck: false,
+    birdTray: false,
+  };
+
+  //gain resource
   const [resourceQuantity, setResourceQuantity] = useAtom(
     gainResourceQuantityAtom
   );
 
-  const activateHabitat = () => {
-    if (currentAction === "playABird") {
-      console.log("Selected wetland. pick a bird now");
-      setSelectedHabitat("wetland");
-      setDisabledStates((draft) => ({
-        ...draft,
-
-        birdHand: false,
-      }));
+  const wetlandClick = () => {
+    if (wetlandDisable) {
+      console.log("Disabled");
     } else {
-      setDisabledStates(initialDisabledStates);
-      setDisableSelection(initialDisableSelectionState);
-      setCurrentAction("wetland");
-
-      if (currentSpace.action.discard !== "none") {
-        setDisabledStates((draft) => ({
-          ...draft,
-          birdDeck: false,
-          birdTray: false,
-          playerEggSupply: false,
-        }));
-
-        console.log(
-          "Current action is forest: Birddeck, birdtray, playereggsupply enabled"
-        );
-      } else {
-        setDisabledStates((draft) => ({
-          ...draft,
-          birdDeck: false,
-          birdTray: false,
-        }));
-        console.log("Current action is forest: birddeck, birdtray enabled");
-      }
-      setResourceQuantity(currentSpace.action.quantity);
+      activateHabitat(
+        currentAction,
+        setHabitat,
+        "wetland",
+        setDisabledStates,
+        setCurrentAction,
+        currentSpace.action,
+        setResourceQuantity,
+        wetlandDiscardStates,
+        wetlandEnableState
+      );
     }
   };
 
   return (
-    <div className="bg-sky-500 py-5" onClick={activateHabitat}>
+    <div className="bg-sky-500 py-5" onClick={wetlandClick}>
       <p>wetland</p>
       <p>
         Can currently gain {resourceQuantity}

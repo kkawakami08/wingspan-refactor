@@ -1,7 +1,4 @@
-import {
-  initialDisableSelectionState,
-  initialDisabledStates,
-} from "../../data/initialData";
+import { initialDisabledStates } from "../../data/initialData";
 
 export const checkEnoughFood = (playedBird, playerFoodSupply) => {
   //count how many foods required by future bird
@@ -115,18 +112,7 @@ export const checkEnoughFood = (playedBird, playerFoodSupply) => {
 
 export const updateHabitat = (
   { setHabitat, habitatBirdCount, setHabitatBirdCount },
-
-  {
-    selectedBird,
-    setSelectedBirds,
-    setSelectedFood,
-    setDisableSelection,
-    setDisabledStates,
-    setCurrentAction,
-    setResourceQuantity,
-    setBirdFoodReq,
-    setSelectedHabitat,
-  }
+  selectedBird
 ) => {
   setHabitat((prev) => ({
     ...prev,
@@ -135,13 +121,49 @@ export const updateHabitat = (
       bird: selectedBird,
     },
   }));
-  setSelectedFood([]);
+
   setHabitatBirdCount((prev) => (prev += 1));
-  setSelectedBirds([]);
-  setDisableSelection(initialDisableSelectionState);
-  setDisabledStates(initialDisabledStates);
-  setCurrentAction("");
-  setResourceQuantity(0);
-  setBirdFoodReq({});
-  setSelectedHabitat("");
+};
+
+export const activateHabitat = (
+  currentAction,
+  setHabitat,
+  location,
+  setDisabledStates,
+  setCurrentAction,
+  currentSpaceAction,
+  setResourceQuantity,
+  habitatDiscardStates,
+  habitatEnableStates
+) => {
+  if (currentAction === "playABird") {
+    console.log(`Selected ${location}. pick a bird now`);
+    setHabitat(location);
+    setDisabledStates((draft) => ({
+      ...draft,
+
+      birdHand: false,
+    }));
+  } else {
+    setDisabledStates(initialDisabledStates);
+
+    setCurrentAction(location);
+
+    if (currentSpaceAction.discard !== "none") {
+      setDisabledStates((draft) => ({
+        ...draft,
+        ...habitatDiscardStates,
+      }));
+      console.log(
+        `current action is ${location} can discard for extra resource`
+      );
+    } else {
+      setDisabledStates((draft) => ({
+        ...draft,
+        ...habitatEnableStates,
+      }));
+      console.log(`current action is ${location}`);
+    }
+    setResourceQuantity(currentSpaceAction.quantity);
+  }
 };

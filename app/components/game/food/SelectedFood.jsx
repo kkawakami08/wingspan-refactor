@@ -19,7 +19,10 @@ import {
   selectedHabitatAtom,
 } from "../../../utils/jotaiStore";
 import { SelectedFoodToken } from "../individual";
-import { saveSelection } from "../../../utils/gameFunctions/generalFunctions";
+import {
+  saveSelection,
+  resetStates,
+} from "../../../utils/gameFunctions/generalFunctions";
 import { enableRolling } from "../../../utils/gameFunctions/birdFeederFunctions";
 import {
   initialDisabledStates,
@@ -28,7 +31,7 @@ import {
 import { updateHabitat } from "../../../utils/gameFunctions/habitatFunctions";
 
 const SelectedFood = () => {
-  //get states from jotai
+  //habitat states
   const [, setForest] = useAtom(forestAtom);
   const [forestBirdCount, setForestBirdCount] = useAtom(forestBirdCountAtom);
   const [, setGrassland] = useAtom(grasslandAtom);
@@ -54,24 +57,34 @@ const SelectedFood = () => {
     setHabitatBirdCount: setWetlandBirdCount,
   };
 
+  //where bird will be played to
   const [selectedHabitat, setSelectedHabitat] = useAtom(selectedHabitatAtom);
 
+  //food states
   const [selectedFood, setSelectedFood] = useAtom(selectedFoodAtom);
   const [, setPlayerFood] = useAtom(playerFoodSupplyAtom);
   const [birdFeeder] = useAtom(birdFeederAtom);
+
+  //bird states
   const [selectedBirds, setSelectedBirds] = useAtom(selectedBirdsAtom);
   const [, setBirdHand] = useAtom(birdHandAtom);
+
+  //gain # resources
   const [, setResourceQuantity] = useAtom(gainResourceQuantityAtom);
+
+  //for play a bird action
   const [birdFoodReq, setBirdFoodReq] = useAtom(birdFoodReqAtom);
 
+  //current action
   const [currentAction, setCurrentAction] = useAtom(currentActionAtom);
+
+  //disable states
   const [disableSelection, setDisableSelection] = useAtom(disableSelectionAtom);
   const [, setDisabledStates] = useAtom(disabledStatesAtom);
 
   const disableFoodSelection = disableSelection.food;
 
-  const updateHabitatObject = {
-    selectedBird: selectedBirds[0],
+  const resetStatesObj = {
     setSelectedBirds,
     setSelectedFood,
     setDisableSelection,
@@ -90,7 +103,7 @@ const SelectedFood = () => {
   const buttonContent =
     currentAction === "forest" ? "save selection" : "discard selection";
 
-  const testFunc = () => {
+  const selectFoodClick = () => {
     if (currentAction === "playABird") {
       let foodCount = [];
       let neededTokens = 0;
@@ -135,13 +148,16 @@ const SelectedFood = () => {
       if (continueAction) {
         switch (selectedHabitat) {
           case "forest":
-            updateHabitat(forestHabitat, updateHabitatObject);
+            updateHabitat(forestHabitat, selectedBirds[0]);
+            resetStates(resetStatesObj);
             break;
           case "grassland":
-            updateHabitat(grasslandHabitat, updateHabitatObject);
+            updateHabitat(grasslandHabitat);
+            resetStates(resetStatesObj);
             break;
           case "wetland":
-            updateHabitat(wetlandHabitat, updateHabitatObject);
+            updateHabitat(wetlandHabitat);
+            resetStates(resetStatesObj);
             break;
         }
       } else {
@@ -170,7 +186,7 @@ const SelectedFood = () => {
       <button
         className="disabled:bg-emerald-100 bg-emerald-900 text-white p-3 rounded-lg"
         disabled={disableFoodSelection}
-        onClick={testFunc}
+        onClick={selectFoodClick}
       >
         {buttonContent}
       </button>

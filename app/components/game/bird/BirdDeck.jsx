@@ -16,20 +16,26 @@ import {
 } from "../../../data/initialData";
 
 const BirdDeck = () => {
+  //disable states
   const [disableState, setDisableState] = useAtom(disabledStatesAtom);
   const [, setDisableSelection] = useAtom(disableSelectionAtom);
   const disableBirdDeck = disableState.birdDeck;
 
+  //bird states
   const [birdDeck, setBirdDeck] = useAtom(birdDeckAtom);
   const [, setBirdTray] = useAtom(birdTrayAtom);
   const [selectedBirds, setSelectedBirds] = useAtom(selectedBirdsAtom);
-  const [birdHand, setBirdHand] = useAtom(birdHandAtom);
+  const [, setBirdHand] = useAtom(birdHandAtom);
+
+  //draw bird card count
   const [resourceQuantity, setResourceQuantity] = useAtom(
     gainResourceQuantityAtom
   );
+
+  //current active habitat
   const [currentAction] = useAtom(currentActionAtom);
 
-  const testFunc = () => {
+  const birdDeckClick = () => {
     if (disableBirdDeck) {
       console.log("Disabled");
     } else {
@@ -55,7 +61,7 @@ const BirdDeck = () => {
     <div>
       <div
         className="bg-cyan-500 p-5 rounded-lg border-2 border-cyan-900 w-40"
-        onClick={testFunc}
+        onClick={birdDeckClick}
       >
         <p>Bird Deck</p>
       </div>

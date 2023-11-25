@@ -12,8 +12,6 @@ import {
   birdDeckAtom,
   playerFoodSupplyAtom,
   birdFoodReqAtom,
-  forestAtom,
-  forestBirdCountAtom,
 } from "../../../utils/jotaiStore";
 import { SelectedBirdCard } from "../individual";
 import { saveSelection } from "../../../utils/gameFunctions/generalFunctions";
@@ -25,22 +23,27 @@ import { refillTray } from "../../../utils/gameFunctions/birdFunctions";
 import { checkEnoughFood } from "../../../utils/gameFunctions/habitatFunctions";
 
 const SelectedBirds = () => {
-  //get states from jotai
+  //bird states
   const [selectedBirds, setSelectedBirds] = useAtom(selectedBirdsAtom);
   const [birdDeck, setBirdDeck] = useAtom(birdDeckAtom);
   const [birdTray, setBirdTray] = useAtom(birdTrayAtom);
   const [, setBirdHand] = useAtom(birdHandAtom);
+  const [, setBirdDiscard] = useAtom(birdDiscardAtom);
+  const [, setBirdFoodReq] = useAtom(birdFoodReqAtom);
+
+  //food states
   const [playerFoodSupply, setPlayerFoodSupply] = useAtom(playerFoodSupplyAtom);
+  const [selectedFood] = useAtom(selectedFoodAtom);
+
+  //current active habitat
   const [currentAction, setCurrentAction] = useAtom(currentActionAtom);
+
+  //bird card quantity
   const [resourceQuantity, setResourceQuantity] = useAtom(
     gainResourceQuantityAtom
   );
-  const [selectedFood] = useAtom(selectedFoodAtom);
-  const [, setBirdDiscard] = useAtom(birdDiscardAtom);
-  const [, setBirdFoodReq] = useAtom(birdFoodReqAtom);
-  const [, setForest] = useAtom(forestAtom);
-  const [forestBirdCount, setForestBirdCount] = useAtom(forestBirdCountAtom);
 
+  //disable states
   const [disableSelection, setDisableSelection] = useAtom(disableSelectionAtom);
   const disableBirdSelection = disableSelection.bird;
   const [, setDisabledStates] = useAtom(disabledStatesAtom);
@@ -53,7 +56,7 @@ const SelectedBirds = () => {
   const buttonContent =
     currentAction === "forest" ? "discard cards" : "save selection";
 
-  const testFunc = () => {
+  const selectedBirdClick = () => {
     if (currentAction === "forest") {
       saveSelection(setBirdDiscard, setSelectedBirds, selectedBirds);
       setResourceQuantity((prev) => (prev += 1));
@@ -110,7 +113,7 @@ const SelectedBirds = () => {
       <button
         className="disabled:bg-emerald-100 bg-emerald-900 text-white p-3 rounded-lg"
         disabled={disableBirdSelection}
-        onClick={testFunc}
+        onClick={selectedBirdClick}
       >
         {buttonContent}
       </button>

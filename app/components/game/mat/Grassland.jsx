@@ -5,11 +5,15 @@ import {
   grasslandAtom,
   disabledStatesAtom,
   selectedHabitatAtom,
+  grasslandBirdCountAtom,
+  gainResourceQuantityAtom,
 } from "../../../utils/jotaiStore";
-import { initialDisabledStates } from "../../../data/initialData";
+import { activateHabitat } from "../../../utils/gameFunctions/habitatFunctions";
 
 const grassland = () => {
+  //grassland state
   const [grassland] = useAtom(grasslandAtom);
+  const [birdCount] = useAtom(grasslandBirdCountAtom);
 
   const grasslandArray = Object.keys(grassland);
   const grasslandContent = grasslandArray.map((space) => (
@@ -18,36 +22,53 @@ const grassland = () => {
 
   //set current action
   const [currentAction, setCurrentAction] = useAtom(currentActionAtom);
-  const [, setSelectedHabitat] = useAtom(selectedHabitatAtom);
+  const currentSpace = grassland[birdCount];
+
+  //resource quantity
+  const [resourceQuantity, setResourceQuantity] = useAtom(
+    gainResourceQuantityAtom
+  );
+
+  //discard for +1 resource
+  const grasslandDiscardStates = {
+    habitats: true,
+
+    playerFood: false,
+    eggSupply: false,
+  };
+  //enable when activated
+  const grasslandEnableState = {
+    habitats: true,
+    eggSupply: false,
+  };
+
+  //selecting habitat for play a bird
+  const [, setHabitat] = useAtom(selectedHabitatAtom);
 
   //disabled states
-  const [, setDisabledStates] = useAtom(disabledStatesAtom);
+  const [disabledStates, setDisabledStates] = useAtom(disabledStatesAtom);
+  const grasslandDisable = disabledStates.habitats;
 
-  const activateGrassland = () => {
-    if (currentAction === "playABird") {
-      console.log("Selected grassland. pick a bird now");
-      setSelectedHabitat("grassland");
-      setDisabledStates((draft) => ({
-        ...draft,
-
-        birdHand: false,
-      }));
+  const grasslandClick = () => {
+    if (grasslandDisable) {
+      console.log("disabled");
     } else {
-      setDisabledStates(initialDisabledStates);
-      setCurrentAction("grassland");
-      console.log(
-        "Current action is grassland.   playerfood, eggsupply enabled"
+      activateHabitat(
+        currentAction,
+        setHabitat,
+        "grassland",
+        setDisabledStates,
+        setCurrentAction,
+        currentSpace.action,
+        setResourceQuantity,
+        grasslandDiscardStates,
+        grasslandEnableState
       );
-      setDisabledStates((draft) => ({
-        ...draft,
-        playerFood: false,
-        eggSupply: false,
-      }));
     }
   };
 
   return (
-    <div className="bg-amber-500 py-5" onClick={activateGrassland}>
+    <div className="bg-amber-500 py-5" onClick={grasslandClick}>
       <p>grassland</p>
       <div className="flex">{grasslandContent}</div>
     </div>

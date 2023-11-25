@@ -3,24 +3,27 @@ import {
   disabledStatesAtom,
   currentActionAtom,
   playerFoodSupplyAtom,
-  birdFoodReqAtom,
   selectedFoodAtom,
   gainResourceQuantityAtom,
   disableSelectionAtom,
-  selectedBirdsAtom,
 } from "../../../utils/jotaiStore";
 import { foodSelection } from "../../../utils/gameFunctions/birdFeederFunctions";
 
 const FoodToken = ({ food }) => {
+  //disabled states
   const [disableState] = useAtom(disabledStatesAtom);
   const disableFood = disableState.playerFood;
+  const [, setDisableSelection] = useAtom(disableSelectionAtom);
+
+  //current action
   const [currentAction] = useAtom(currentActionAtom);
+
+  //food states
   const [playerFoodSupply, setPlayerFoodSupply] = useAtom(playerFoodSupplyAtom);
   const [selectedFood, setSelectedFood] = useAtom(selectedFoodAtom);
-  const [birdFoodReq, setBirdFoodReq] = useAtom(birdFoodReqAtom);
+
+  //resource quantity
   const [resourceQuantity] = useAtom(gainResourceQuantityAtom);
-  const [, setDisableSelection] = useAtom(disableSelectionAtom);
-  // console.log(birdFoodReq);
 
   const testFunc = () => {
     if (disableFood) {

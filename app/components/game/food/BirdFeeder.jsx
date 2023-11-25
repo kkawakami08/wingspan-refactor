@@ -10,14 +10,16 @@ import {
 } from "../../../utils/gameFunctions/birdFeederFunctions";
 
 const BirdFeeder = () => {
+  //birdfeeder state
   const [birdFeeder, setBirdFeeder] = useAtom(birdFeederAtom);
+
+  //disable states
+  const [disableSelection, setDisableSelection] = useAtom(disableSelectionAtom);
+  const disableRolling = disableSelection.birdFeeder;
 
   const birdFeederContent = birdFeeder.map((die) => (
     <BirdFeederDie key={die.id} die={die} />
   ));
-
-  const [disableSelection, setDisableSelection] = useAtom(disableSelectionAtom);
-  const disableRolling = disableSelection.birdFeeder;
 
   const rollDice = () => {
     const newRoll = rollBirdFeeder();

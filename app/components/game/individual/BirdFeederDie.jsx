@@ -9,16 +9,19 @@ import {
 import { foodSelection } from "../../../utils/gameFunctions/birdFeederFunctions";
 
 const BirdFeederDie = ({ die }) => {
+  //disable states
   const [disableState] = useAtom(disabledStatesAtom);
   const disableBirdFeeder = disableState.birdFeeder;
   const [, setDisableSelection] = useAtom(disableSelectionAtom);
 
+  //food state
   const [birdFeeder, setBirdFeeder] = useAtom(birdFeederAtom);
   const [selectedFood, setSelectedFood] = useAtom(selectedFoodAtom);
 
+  //resource quantity
   const [resourceQuantity] = useAtom(gainResourceQuantityAtom);
 
-  const testFunc = () => {
+  const birdFeederDieClick = () => {
     if (disableBirdFeeder) {
       console.log("Disabled");
     } else {
@@ -33,7 +36,10 @@ const BirdFeederDie = ({ die }) => {
   };
 
   return (
-    <div className="bg-indigo-400 p-3 rounded-lg text-white" onClick={testFunc}>
+    <div
+      className="bg-indigo-400 p-3 rounded-lg text-white"
+      onClick={birdFeederDieClick}
+    >
       <p>{die.type}</p>
     </div>
   );

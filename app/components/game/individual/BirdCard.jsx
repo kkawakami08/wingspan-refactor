@@ -7,7 +7,7 @@ import {
   selectedBirdsAtom,
   disableSelectionAtom,
 } from "../../../utils/jotaiStore";
-import { cardSelection } from "../../../utils/gameFunctions/birdFunctions";
+import { cardSelection } from "../../../utils/gameFunctions/generalFunctions";
 
 const BirdCard = ({ bird }) => {
   //disable states
@@ -24,6 +24,7 @@ const BirdCard = ({ bird }) => {
 
   //eggs
   const [eggCount, setEggCount] = useState(bird.egg_limit);
+
   //food reqs
   const foodReqContent = bird.food.map((food, index) => (
     <p key={index} className="bg-cyan-900 text-white p-2 rounded-lg">
@@ -31,7 +32,7 @@ const BirdCard = ({ bird }) => {
     </p>
   ));
 
-  const testFunc = () => {
+  const birdCardClick = () => {
     if (disableBirdCard) {
       console.log("Disabled");
     } else {
@@ -71,7 +72,7 @@ const BirdCard = ({ bird }) => {
   return (
     <div
       className="bg-cyan-500 p-5 rounded-lg border-2 border-cyan-900 text-center flex flex-col gap-2"
-      onClick={testFunc}
+      onClick={birdCardClick}
     >
       <p className=" text-lg">{bird.common_name}</p>
       <div className="flex gap-3">{foodReqContent}</div>

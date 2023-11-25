@@ -8,9 +8,10 @@ import {
   forestBirdCountAtom,
   selectedHabitatAtom,
 } from "../../../utils/jotaiStore";
-import { initialDisabledStates } from "../../../data/initialData";
+import { activateHabitat } from "../../../utils/gameFunctions/habitatFunctions";
 
 const Forest = () => {
+  //forest state
   const [forest] = useAtom(forestAtom);
   const [birdCount] = useAtom(forestBirdCountAtom);
 
@@ -24,50 +25,51 @@ const Forest = () => {
   const currentSpace = forest[birdCount];
 
   //disabled states
-  const [, setDisabledStates] = useAtom(disabledStatesAtom);
+  const [disabledStates, setDisabledStates] = useAtom(disabledStatesAtom);
+  const forestDisable = disabledStates.habitats;
+
+  //discard for +1 resource
+  const forestDiscardStates = {
+    habitats: true,
+
+    birdFeeder: false,
+    birdHand: false,
+  };
+  //enable when activated
+  const forestEnableState = {
+    habitats: true,
+    playABird: true,
+    birdFeeder: false,
+  };
 
   //resource gain quantity
   const [resourceQuantity, setResourceQuantity] = useAtom(
     gainResourceQuantityAtom
   );
-  // console.log(forest);
 
   //select forest habitat for play a bird
   const [, setHabitat] = useAtom(selectedHabitatAtom);
 
-  const activateHabitat = () => {
-    if (currentAction === "playABird") {
-      console.log("Selected forest. pick a bird now");
-      setHabitat("forest");
-      setDisabledStates((draft) => ({
-        ...draft,
-
-        birdHand: false,
-      }));
+  const forestClick = () => {
+    if (forestDisable) {
+      console.log("disabled");
     } else {
-      setDisabledStates(initialDisabledStates);
-      setCurrentAction("forest");
-
-      if (currentSpace.action.discard !== "none") {
-        setDisabledStates((draft) => ({
-          ...draft,
-          birdFeeder: false,
-          birdHand: false,
-        }));
-        console.log("Current action is forest: Birdfeeder, BirdHand enabled");
-      } else {
-        setDisabledStates((draft) => ({
-          ...draft,
-          birdFeeder: false,
-        }));
-        console.log("Current action is forest: Birdfeeder enabled");
-      }
-      setResourceQuantity(currentSpace.action.quantity);
+      activateHabitat(
+        currentAction,
+        setHabitat,
+        "forest",
+        setDisabledStates,
+        setCurrentAction,
+        currentSpace.action,
+        setResourceQuantity,
+        forestDiscardStates,
+        forestEnableState
+      );
     }
   };
 
   return (
-    <div className="bg-emerald-500 py-5" onClick={activateHabitat}>
+    <div className="bg-emerald-500 py-5" onClick={forestClick}>
       <p>Forest</p>
       <p>
         Can currently gain {resourceQuantity}
