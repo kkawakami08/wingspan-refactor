@@ -167,3 +167,47 @@ export const activateHabitat = (
     setResourceQuantity(currentSpaceAction.quantity);
   }
 };
+
+export const playBird = (selectedFood, selectedBird, birdFoodReq) => {
+  let foodCount = [];
+  let neededTokens = 0;
+  for (const { type } of selectedFood) {
+    foodCount.push(type);
+  }
+  console.log("foodCount", foodCount);
+  console.log("birdReq", selectedBird.food);
+  for (let i = 0; i < selectedBird.food.length; i++) {
+    let currentItem = selectedBird.food[i];
+    if (currentItem === "wild") continue;
+    const index = foodCount.indexOf(currentItem);
+    console.log(index);
+    if (index >= 0) {
+      foodCount.splice(index, 1);
+    } else {
+      console.log(`no ${currentItem} found`);
+      neededTokens++;
+    }
+    console.log("foodCount updated", foodCount);
+  }
+  let continueAction = false;
+  console.log(birdFoodReq);
+  if (birdFoodReq.wild) {
+    console.log(`bird uses ${birdFoodReq.wild} wild tokens`);
+    if (foodCount.length === birdFoodReq.wild) {
+      console.log("you have enough tokens. placed bird");
+      continueAction = true;
+    }
+  } else {
+    console.log(
+      `missing ${neededTokens} more tokens for bird. so ${
+        neededTokens * 2
+      } total`
+    );
+    if (foodCount.length === neededTokens * 2) {
+      console.log("enough tokens to play bird");
+      continueAction = true;
+    }
+  }
+  return continueAction;
+  //
+};

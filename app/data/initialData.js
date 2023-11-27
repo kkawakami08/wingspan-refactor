@@ -56,10 +56,7 @@ export const initialDisabledStates = {
   foodSupply: true,
   eggSupply: true,
   playerEggSupply: true,
-  playABird: false,
-  forest: false,
-  grassland: false,
-  wetland: false,
+  habitats: false,
 };
 
 export const initialDisableSelectionState = {

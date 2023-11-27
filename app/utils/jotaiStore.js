@@ -31,9 +31,9 @@ export const wetlandAtom = atom(initialWetland);
 export const currentActionAtom = atom("");
 
 //habitat bird count
-export const forestBirdCountAtom = atom(1);
+export const forestBirdCountAtom = atom(0);
 export const grasslandBirdCountAtom = atom(0);
-export const wetlandBirdCountAtom = atom(1);
+export const wetlandBirdCountAtom = atom(0);
 
 //resource gain amount
 export const gainResourceQuantityAtom = atom(0);

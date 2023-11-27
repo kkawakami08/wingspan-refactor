@@ -76,6 +76,7 @@ const BirdCard = ({ bird }) => {
     >
       <p className=" text-lg">{bird.common_name}</p>
       <div className="flex gap-3">{foodReqContent}</div>
+      {/* <p>Egg Limit: {bird.egg_limit}</p> */}
     </div>
   );
 };

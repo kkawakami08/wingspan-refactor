@@ -2,6 +2,7 @@ import { PlayerSetup } from "./player";
 import { BirdDeck, BirdTray, SelectedBirds } from "./bird";
 import { BirdFeeder, SelectedFood } from "./food";
 import { HabitatMat } from "./mat";
+import { EggSupply } from "./eggs";
 
 const GameLayout = () => {
   return (
@@ -10,6 +11,7 @@ const GameLayout = () => {
       <BirdDeck />
       <BirdTray />
       <BirdFeeder />
+      <EggSupply />
       <SelectedBirds />
       <SelectedFood />
       <HabitatMat />

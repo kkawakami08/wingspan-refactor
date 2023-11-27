@@ -28,7 +28,10 @@ import {
   initialDisabledStates,
   initialDisableSelectionState,
 } from "../../../data/initialData";
-import { updateHabitat } from "../../../utils/gameFunctions/habitatFunctions";
+import {
+  updateHabitat,
+  playBird,
+} from "../../../utils/gameFunctions/habitatFunctions";
 
 const SelectedFood = () => {
   //habitat states
@@ -105,58 +108,20 @@ const SelectedFood = () => {
 
   const selectFoodClick = () => {
     if (currentAction === "playABird") {
-      let foodCount = [];
-      let neededTokens = 0;
-      for (const { type } of selectedFood) {
-        foodCount.push(type);
-      }
-      console.log("foodCount", foodCount);
-      console.log("birdReq", selectedBirds[0].food);
-      for (let i = 0; i < selectedBirds[0].food.length; i++) {
-        let currentItem = selectedBirds[0].food[i];
-        if (currentItem === "wild") continue;
-        const index = foodCount.indexOf(currentItem);
-        console.log(index);
-        if (index >= 0) {
-          foodCount.splice(index, 1);
-        } else {
-          console.log(`no ${currentItem} found`);
-          neededTokens++;
-        }
-        console.log("foodCount updated", foodCount);
-      }
-      let continueAction = false;
-      console.log(birdFoodReq);
-      if (birdFoodReq.wild) {
-        console.log(`bird uses ${birdFoodReq.wild} wild tokens`);
-        if (foodCount.length === birdFoodReq.wild) {
-          console.log("you have enough tokens. placed bird");
-          continueAction = true;
-        }
-      } else {
-        console.log(
-          `missing ${neededTokens} more tokens for bird. so ${
-            neededTokens * 2
-          } total`
-        );
-        if (foodCount.length === neededTokens * 2) {
-          console.log("enough tokens to play bird");
-          continueAction = true;
-        }
-      }
+      const canPlayBird = playBird(selectedFood, selectedBirds[0], birdFoodReq);
 
-      if (continueAction) {
+      if (canPlayBird) {
         switch (selectedHabitat) {
           case "forest":
             updateHabitat(forestHabitat, selectedBirds[0]);
             resetStates(resetStatesObj);
             break;
           case "grassland":
-            updateHabitat(grasslandHabitat);
+            updateHabitat(grasslandHabitat, selectedBirds[0]);
             resetStates(resetStatesObj);
             break;
           case "wetland":
-            updateHabitat(wetlandHabitat);
+            updateHabitat(wetlandHabitat, selectedBirds[0]);
             resetStates(resetStatesObj);
             break;
         }
