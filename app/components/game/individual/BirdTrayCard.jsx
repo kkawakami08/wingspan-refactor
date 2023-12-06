@@ -25,6 +25,12 @@ const BirdTrayCard = ({ bird }) => {
   //resource quantity
   const [resourceQuantity] = useAtom(gainResourceQuantityAtom);
 
+  const foodReqContent = bird.food.map((food, index) => (
+    <p key={index} className="bg-cyan-900 text-white p-2 rounded-lg">
+      {food}
+    </p>
+  ));
+
   const birdTrayCardClick = () => {
     if (disableBirdTray) {
       console.log("Cant click");
@@ -54,6 +60,7 @@ const BirdTrayCard = ({ bird }) => {
       onClick={birdTrayCardClick}
     >
       <p>{bird.common_name}</p>
+      <div className="flex gap-3 flex-wrap">{foodReqContent}</div>
     </div>
   );
 };

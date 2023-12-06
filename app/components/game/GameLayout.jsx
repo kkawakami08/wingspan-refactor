@@ -6,12 +6,17 @@ import { EggSupply } from "./eggs";
 
 const GameLayout = () => {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="grid-cols-3 grid gap-5 justify-center p-5">
       <PlayerSetup />
-      <BirdDeck />
-      <BirdTray />
-      <BirdFeeder />
-      <EggSupply />
+      <div className="flex flex-col gap-5 ">
+        <BirdTray />
+        <BirdDeck />
+      </div>
+      <div className="flex flex-col gap-5 items-center">
+        <BirdFeeder />
+        <EggSupply />
+      </div>
+
       <SelectedBirds />
       <SelectedFood />
       <HabitatMat />

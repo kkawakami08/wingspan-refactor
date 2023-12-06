@@ -63,6 +63,8 @@ const BirdCard = ({ bird }) => {
         } else {
           setDisableSelection((prev) => ({ ...prev, bird: true }));
         }
+      } else if (currentAction === "grassland") {
+        console.log("Placed eggs on this bird");
       } else {
         console.log("Cannot select birds");
       }
@@ -76,7 +78,7 @@ const BirdCard = ({ bird }) => {
     >
       <p className=" text-lg">{bird.common_name}</p>
       <div className="flex gap-3">{foodReqContent}</div>
-      {/* <p>Egg Limit: {bird.egg_limit}</p> */}
+      <p>Egg Limit: {bird.egg_limit}</p>
     </div>
   );
 };

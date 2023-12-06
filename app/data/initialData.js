@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 import { rollBirdFeeder } from "../utils/gameFunctions/birdFeederFunctions";
+import { playedBird } from "./testingBirdCards";
 
 export const playerFoodSupply = [
   { type: "fruit", id: nanoid() },
@@ -20,6 +21,9 @@ const createInitialHabitat = (resource, discard, startingQuantity) => {
           discard: "none",
         },
         bird: null,
+        eggCount: 0,
+        cacheCount: 0,
+        tuckedCount: 0,
       };
     } else {
       habitat[i] = {
@@ -29,13 +33,20 @@ const createInitialHabitat = (resource, discard, startingQuantity) => {
           discard: discard,
         },
         bird: null,
+        eggCount: 0,
+        cacheCount: 0,
+        tuckedCount: 0,
       };
       startingQuantity += 1;
     }
   }
   return habitat;
 };
-export const initialForest = createInitialHabitat("dice", "card", 1);
+
+const testForest = createInitialHabitat("dice", "card", 1);
+testForest[0].bird = playedBird;
+
+export const initialForest = testForest;
 export const initialGrassland = createInitialHabitat("eggs", "food", 2);
 export const initialWetland = createInitialHabitat("cards", "egg", 1);
 
@@ -57,6 +68,7 @@ export const initialDisabledStates = {
   eggSupply: true,
   playerEggSupply: true,
   habitats: false,
+  playedBird: true,
 };
 
 export const initialDisableSelectionState = {

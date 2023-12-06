@@ -7,6 +7,9 @@ import GrasslandActionSpace from "./GrasslandActionSpace";
 import WetlandActionSpace from "./WetlandActionSpace";
 import BirdFeederDie from "./BirdFeederDie";
 import SelectedFoodToken from "./SelectedFoodToken";
+import Egg from "./Egg";
+import ActionSpace from "./ActionSpace";
+import ForestPlayedBirdCard from "./ForestPlayedBirdCard";
 
 export {
   BirdCard,
@@ -18,4 +21,7 @@ export {
   WetlandActionSpace,
   BirdFeederDie,
   SelectedFoodToken,
+  Egg,
+  ActionSpace,
+  ForestPlayedBirdCard,
 };

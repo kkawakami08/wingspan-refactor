@@ -3,7 +3,7 @@ import {
   grasslandAtom,
   grasslandBirdCountAtom,
 } from "../../../utils/jotaiStore";
-import { BirdCard } from "./";
+// import { PlayedBirdCard } from "./";
 
 const GrasslandActionSpace = ({ space }) => {
   const [grassland] = useAtom(grasslandAtom);
@@ -12,11 +12,11 @@ const GrasslandActionSpace = ({ space }) => {
 
   const activeCSS =
     grasslandBirdCount === Number(space)
-      ? "bg-white flex flex-col text-center gap-2 justify-center border-2 border-emerald-900 rounded-lg"
-      : "flex flex-col text-center gap-2 justify-center border-2 border-emerald-900 rounded-lg";
+      ? "bg-white flex flex-col text-center gap-2 justify-center border-2 border-emerald-900 rounded-lg px-10"
+      : "flex flex-col text-center gap-2 justify-center border-2 border-emerald-900 rounded-lg px-10";
 
   if (currentSpace.bird !== null) {
-    return <BirdCard bird={currentSpace.bird} />;
+    // return <PlayedBirdCard bird={currentSpace.bird} />;
   } else {
     return (
       <div className={activeCSS}>

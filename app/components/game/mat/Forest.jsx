@@ -69,13 +69,15 @@ const Forest = () => {
   };
 
   return (
-    <div className="bg-emerald-500 py-5" onClick={forestClick}>
-      <p>Forest</p>
-      <p>
-        Can currently gain {resourceQuantity}
-        dice
+    <div
+      className="bg-emerald-500 py-5 flex flex-col gap-3"
+      onClick={forestClick}
+    >
+      <p className="font-bold text-2xl text-center">Forest</p>
+      <p className="text-center font-xl">
+        Can currently gain {resourceQuantity} dice
       </p>
-      <div className="flex">{forestContent}</div>
+      <div className="flex justify-center gap-5 px-5">{forestContent}</div>
     </div>
   );
 };

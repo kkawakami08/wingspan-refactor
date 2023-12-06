@@ -6,6 +6,8 @@ import {
   disabledStatesAtom,
   selectedHabitatAtom,
   grasslandBirdCountAtom,
+  wetlandBirdCountAtom,
+  forestBirdCountAtom,
   gainResourceQuantityAtom,
 } from "../../../utils/jotaiStore";
 import { activateHabitat } from "../../../utils/gameFunctions/habitatFunctions";
@@ -29,10 +31,18 @@ const grassland = () => {
     gainResourceQuantityAtom
   );
 
+  //habitat bird count for bird count Check
+  const [forestBirdCount] = useAtom(forestBirdCountAtom);
+  const [wetlandBirdCount] = useAtom(wetlandBirdCountAtom);
+
+  //if true can't place eggs
+  const birdCountCheck =
+    forestBirdCount === 0 && wetlandBirdCount === 0 && birdCount === 0;
+
   //discard for +1 resource
   const grasslandDiscardStates = {
     habitats: true,
-
+    playedBird: false,
     playerFood: false,
     eggSupply: false,
   };
@@ -40,6 +50,7 @@ const grassland = () => {
   const grasslandEnableState = {
     habitats: true,
     eggSupply: false,
+    playedBird: false,
   };
 
   //selecting habitat for play a bird
@@ -53,24 +64,34 @@ const grassland = () => {
     if (grasslandDisable) {
       console.log("disabled");
     } else {
-      activateHabitat(
-        currentAction,
-        setHabitat,
-        "grassland",
-        setDisabledStates,
-        setCurrentAction,
-        currentSpace.action,
-        setResourceQuantity,
-        grasslandDiscardStates,
-        grasslandEnableState
-      );
+      if (birdCountCheck) {
+        console.log("can't place any eggs, pick diff habitat to play");
+      } else {
+        activateHabitat(
+          currentAction,
+          setHabitat,
+          "grassland",
+          setDisabledStates,
+          setCurrentAction,
+          currentSpace.action,
+          setResourceQuantity,
+          grasslandDiscardStates,
+          grasslandEnableState
+        );
+      }
     }
   };
 
   return (
-    <div className="bg-amber-500 py-5" onClick={grasslandClick}>
-      <p>grassland</p>
-      <div className="flex">{grasslandContent}</div>
+    <div
+      className="bg-amber-500 py-5 flex flex-col gap-3"
+      onClick={grasslandClick}
+    >
+      <p className="font-bold text-2xl text-center">Grassland</p>
+      <p className="text-center font-xl">
+        Can currently gain {resourceQuantity} eggs
+      </p>
+      <div className="flex justify-center gap-5 px-5">{grasslandContent}</div>
     </div>
   );
 };

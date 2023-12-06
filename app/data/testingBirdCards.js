@@ -1,72 +1,5 @@
 export const playerBirdHand = [
   {
-    common_name: "Bushtit",
-    scientific_name: "Psaltriparus minimus",
-    vp: 2,
-    nest: "wild",
-    egg_limit: 5,
-    wingspan: 15,
-    power: {
-      color: "brown",
-      description:
-        "Tuck 1 card from your hand behind this bird. If you do, you may also lay 1 egg on this bird.",
-      variable: {
-        predator: {
-          trait: "none",
-          prey_wingspan: 0,
-          roll: false,
-        },
-        eggs: {
-          quantity: 1,
-          affected_birds: "this",
-          affected_nests: "wild",
-        },
-        food: {
-          gain_type: "none",
-          gain_quantity: 0,
-          from: "none",
-          lose_type: "none",
-          lose_quantity: 0,
-        },
-        tuck: {
-          quantity: 1,
-          from: "hand",
-        },
-        draw: {
-          from: "none",
-          type: "none",
-          gain_quantity: 0,
-          lose_quantity: 0,
-        },
-        traveling: false,
-        repeat_power: {
-          ability: false,
-          type: "none",
-        },
-        additional_bird: false,
-        cache: {
-          ability: false,
-          to_food_supply: false,
-          type: "none",
-        },
-      },
-    },
-    habitat: ["forest", "grassland", "wetland"],
-    food: ["invertebrate", "seed"],
-    food_count: 2,
-    locations: ["North America", "Central America"],
-    bonus_cards: [
-      "Backyard Birder",
-      "Bird Counter",
-      "Bird Feeder",
-      "Enclosure Builder",
-      "Nest Box Builder",
-      "Passerine Specialist",
-      "Platform Builder",
-      "Wildlife Gardener",
-    ],
-  },
-  {
     common_name: "Chihuahuan Raven",
     scientific_name: "Corvus cryptoleucus",
     vp: 4,
@@ -324,6 +257,74 @@ export const playerBirdHand = [
     ],
   },
 ];
+
+export const playedBird = {
+  common_name: "Bushtit",
+  scientific_name: "Psaltriparus minimus",
+  vp: 2,
+  nest: "wild",
+  egg_limit: 5,
+  wingspan: 15,
+  power: {
+    color: "brown",
+    description:
+      "Tuck 1 card from your hand behind this bird. If you do, you may also lay 1 egg on this bird.",
+    variable: {
+      predator: {
+        trait: "none",
+        prey_wingspan: 0,
+        roll: false,
+      },
+      eggs: {
+        quantity: 1,
+        affected_birds: "this",
+        affected_nests: "wild",
+      },
+      food: {
+        gain_type: "none",
+        gain_quantity: 0,
+        from: "none",
+        lose_type: "none",
+        lose_quantity: 0,
+      },
+      tuck: {
+        quantity: 1,
+        from: "hand",
+      },
+      draw: {
+        from: "none",
+        type: "none",
+        gain_quantity: 0,
+        lose_quantity: 0,
+      },
+      traveling: false,
+      repeat_power: {
+        ability: false,
+        type: "none",
+      },
+      additional_bird: false,
+      cache: {
+        ability: false,
+        to_food_supply: false,
+        type: "none",
+      },
+    },
+  },
+  habitat: ["forest", "grassland", "wetland"],
+  food: ["invertebrate", "seed"],
+  food_count: 2,
+  locations: ["North America", "Central America"],
+  bonus_cards: [
+    "Backyard Birder",
+    "Bird Counter",
+    "Bird Feeder",
+    "Enclosure Builder",
+    "Nest Box Builder",
+    "Passerine Specialist",
+    "Platform Builder",
+    "Wildlife Gardener",
+  ],
+};
 
 export const birdTray = [
   {

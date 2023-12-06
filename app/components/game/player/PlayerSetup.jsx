@@ -2,7 +2,7 @@ import { BirdHand, PlayerFoodSupply } from "./";
 
 const PlayerSetup = () => {
   return (
-    <div>
+    <div className="flex flex-col gap-5 ">
       <BirdHand />
       <PlayerFoodSupply />
     </div>

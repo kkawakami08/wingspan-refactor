@@ -29,8 +29,8 @@ const PlayABird = () => {
   };
 
   return (
-    <div className="bg-pink-500 py-5 flex gap-5" onClick={playABirdClick}>
-      <p>Play A Bird</p>
+    <div className="bg-pink-500 py-5 " onClick={playABirdClick}>
+      <p className="font-bold text-2xl text-center ">Play A Bird</p>
       {selectedHabitat !== "" && <p>Selected Habitat: {selectedHabitat}</p>}
     </div>
   );

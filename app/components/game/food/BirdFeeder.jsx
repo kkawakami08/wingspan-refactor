@@ -28,9 +28,9 @@ const BirdFeeder = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-5">
       <p>Bird feeder</p>
-      <div className="flex gap-3">{birdFeederContent}</div>
+      <div className="flex gap-3 flex-wrap">{birdFeederContent}</div>
       <button
         onClick={rollDice}
         disabled={disableRolling}

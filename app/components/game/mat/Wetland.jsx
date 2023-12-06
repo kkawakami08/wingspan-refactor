@@ -75,13 +75,12 @@ const wetland = () => {
   };
 
   return (
-    <div className="bg-sky-500 py-5" onClick={wetlandClick}>
-      <p>wetland</p>
-      <p>
-        Can currently gain {resourceQuantity}
-        cards
+    <div className="bg-sky-500 py-5 flex flex-col gap-3" onClick={wetlandClick}>
+      <p className="font-bold text-2xl text-center">Wetland</p>
+      <p className="text-center font-xl">
+        Can currently gain {resourceQuantity} cards
       </p>
-      <div className="flex">{wetlandContent}</div>
+      <div className="flex justify-center gap-5 px-5">{wetlandContent}</div>
     </div>
   );
 };

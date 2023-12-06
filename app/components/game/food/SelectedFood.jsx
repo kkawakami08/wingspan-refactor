@@ -113,14 +113,17 @@ const SelectedFood = () => {
       if (canPlayBird) {
         switch (selectedHabitat) {
           case "forest":
+            console.log("adding bird to forest");
             updateHabitat(forestHabitat, selectedBirds[0]);
             resetStates(resetStatesObj);
             break;
           case "grassland":
+            console.log("adding bird to grassland");
             updateHabitat(grasslandHabitat, selectedBirds[0]);
             resetStates(resetStatesObj);
             break;
           case "wetland":
+            console.log("adding bird to wetland");
             updateHabitat(wetlandHabitat, selectedBirds[0]);
             resetStates(resetStatesObj);
             break;
