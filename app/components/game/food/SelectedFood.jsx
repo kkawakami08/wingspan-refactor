@@ -131,6 +131,17 @@ const SelectedFood = () => {
       } else {
         console.log("Not enough tokens");
       }
+    } else if (currentAction === "grassland") {
+      setResourceQuantity((prev) => prev + 1);
+      setSelectedFood([]);
+      setDisabledStates((prev) => ({
+        ...prev,
+        playerFood: true,
+      }));
+      setDisableSelection((prev) => ({
+        ...prev,
+        food: true,
+      }));
     } else {
       if (selectedBirds.length > 0) {
         setBirdHand((prev) => [...prev, ...selectedBirds]);

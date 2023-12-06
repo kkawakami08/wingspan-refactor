@@ -25,7 +25,7 @@ const FoodToken = ({ food }) => {
   //resource quantity
   const [resourceQuantity] = useAtom(gainResourceQuantityAtom);
 
-  const testFunc = () => {
+  const foodTokenClick = () => {
     if (disableFood) {
       console.log("Disabled");
     } else {
@@ -48,12 +48,34 @@ const FoodToken = ({ food }) => {
             food: true,
           }));
         }
+      } else if (currentAction === "grassland") {
+        console.log("discarded food");
+        foodSelection(
+          playerFoodSupply,
+          setSelectedFood,
+          setPlayerFoodSupply,
+          food.id
+        );
+        if (selectedFood.length + 1 === 1) {
+          setDisableSelection((prev) => ({
+            ...prev,
+            food: false,
+          }));
+        } else {
+          setDisableSelection((prev) => ({
+            ...prev,
+            food: true,
+          }));
+        }
       }
     }
   };
 
   return (
-    <div className="bg-indigo-400 p-3 rounded-lg text-white" onClick={testFunc}>
+    <div
+      className="bg-indigo-400 p-3 rounded-lg text-white"
+      onClick={foodTokenClick}
+    >
       <p>{food.type}</p>
     </div>
   );

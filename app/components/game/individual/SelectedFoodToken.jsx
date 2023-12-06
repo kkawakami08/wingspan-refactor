@@ -44,6 +44,25 @@ const SelectedFoodToken = ({ food }) => {
           food: true,
         }));
       }
+    } else if (currentAction === "grassland") {
+      console.log("discarded food");
+      foodSelection(
+        selectedFood,
+        setPlayerFoodSupply,
+        setSelectedFood,
+        food.id
+      );
+      if (selectedFood.length === 1) {
+        setDisableSelection((prev) => ({
+          ...prev,
+          food: false,
+        }));
+      } else {
+        setDisableSelection((prev) => ({
+          ...prev,
+          food: true,
+        }));
+      }
     } else {
       foodSelection(selectedFood, setBirdFeeder, setSelectedFood, food.id);
       if (selectedFood.length === resourceQuantity) {
