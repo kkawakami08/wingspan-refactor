@@ -42,7 +42,7 @@ const wetland = () => {
     habitats: true,
     birdDeck: false,
     birdTray: false,
-    playerEggSupply: false,
+    playedBird: false,
   };
   //enable when activated
   const wetlandEnableState = {

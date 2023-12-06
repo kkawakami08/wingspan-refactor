@@ -61,7 +61,12 @@ const SelectedBirds = () => {
       saveSelection(setBirdDiscard, setSelectedBirds, selectedBirds);
       setResourceQuantity((prev) => (prev += 1));
       setDisableSelection((prev) => ({ ...prev, bird: true }));
-      if (selectedFood.length + 1 === resourceQuantity) {
+      setDisabledStates((prev) => ({
+        ...prev,
+        birdHand: true,
+      }));
+      console.log("selected length", selectedFood.length);
+      if (selectedFood.length === resourceQuantity + 1) {
         setDisableSelection((prev) => ({ ...prev, food: false }));
       } else {
         setDisableSelection((prev) => ({ ...prev, food: true }));

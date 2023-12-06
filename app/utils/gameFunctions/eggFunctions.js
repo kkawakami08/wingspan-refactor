@@ -27,6 +27,18 @@ export const layEgg = (setHabitat, space, setResourceQuantity) => {
   setResourceQuantity((prev) => prev - 1);
 };
 
+export const removeEgg = (setHabitat, space, setResourceQuantity) => {
+  //update forest[space].eggCount --
+  setHabitat((prev) => ({
+    ...prev,
+    [space]: {
+      ...prev[space],
+      eggCount: prev[space].eggCount - 1,
+    },
+  }));
+  setResourceQuantity((prev) => prev + 1);
+};
+
 export const resetGrassland = ({
   setCurrentAction,
 

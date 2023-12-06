@@ -52,19 +52,23 @@ const ForestPlayedBirdCard = ({ space }) => {
     if (disablePlayedBird) {
       console.log("Disabled");
     } else {
-      console.log(currentSpace.eggCount, "placed eggs");
-      console.log(currentSpace.bird.egg_limit, " egg limit");
-      if (currentSpace.eggCount >= currentSpace.bird.egg_limit) {
-        console.log("Can't place more eggs on this bird");
-      } else {
-        console.log("placed egg");
-        //update state in forest for bird egg count
-        layEgg(setForest, space, setResourceQuantity);
+      if (currentAction === "grassland") {
+        if (currentSpace.eggCount >= currentSpace.bird.egg_limit) {
+          console.log("Can't place more eggs on this bird");
+          //logic to check if can place eggs on other birds, if not, discards extra eggs
+        } else {
+          console.log("placed egg");
+          //update state in forest for bird egg count
+          layEgg(setForest, space, setResourceQuantity);
 
-        if (resourceQuantity === 1) {
-          console.log("No more eggs to place");
-          resetGrassland(resetGrasslandObj);
+          if (resourceQuantity === 1) {
+            console.log("No more eggs to place");
+            resetGrassland(resetGrasslandObj);
+          }
         }
+      } else if (currentAction === "wetland") {
+        //if eggcount = 0 can't discard egg
+        console.log("removed egg from bird");
       }
     }
   };
