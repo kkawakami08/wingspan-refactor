@@ -10,6 +10,7 @@ import { useState } from "react";
 import {
   layEgg,
   resetGrassland,
+  removeEgg,
 } from "../../../utils/gameFunctions/eggFunctions";
 
 const ForestPlayedBirdCard = ({ space }) => {
@@ -68,7 +69,16 @@ const ForestPlayedBirdCard = ({ space }) => {
         }
       } else if (currentAction === "wetland") {
         //if eggcount = 0 can't discard egg
-        console.log("removed egg from bird");
+        if (currentSpace.eggCount === 0) {
+          console.log("no eggs to discard");
+        } else {
+          console.log("removed egg from bird");
+          removeEgg(setForest, space, setResourceQuantity);
+          setDisabledStates((prev) => ({
+            ...prev,
+            playedBird: true,
+          }));
+        }
       }
     }
   };
