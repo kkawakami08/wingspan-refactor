@@ -42,7 +42,19 @@ const BirdDeck = () => {
       if (currentAction === "wetland") {
         drawCard(birdDeck, setBirdHand, setBirdDeck);
 
-        setResourceQuantity((prev) => (prev -= 1));
+        setResourceQuantity((prev) => prev - 1);
+        console.log(
+          "selected bird length",
+          selectedBirds.length,
+          "and resource quantity",
+          resourceQuantity - 1
+        );
+        if (resourceQuantity - 1 !== selectedBirds.length) {
+          setDisableSelection((prev) => ({
+            ...prev,
+            bird: true,
+          }));
+        }
 
         if (resourceQuantity - 1 === 0) {
           console.log("No more");

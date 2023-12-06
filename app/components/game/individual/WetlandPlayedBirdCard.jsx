@@ -3,7 +3,7 @@ import {
   currentActionAtom,
   disableSelectionAtom,
   disabledStatesAtom,
-  grasslandAtom,
+  wetlandAtom,
   gainResourceQuantityAtom,
 } from "../../../utils/jotaiStore";
 import {
@@ -12,15 +12,15 @@ import {
   removeEgg,
 } from "../../../utils/gameFunctions/eggFunctions";
 
-const GrasslandPlayedBirdCard = ({ space }) => {
+const WetlandPlayedBirdCard = ({ space }) => {
   //disable states
   const [disableSelection, setDisableSelection] = useAtom(disableSelectionAtom);
   const [disabledStates, setDisabledStates] = useAtom(disabledStatesAtom);
   const disablePlayedBird = disabledStates.playedBird;
 
-  //grassland states
-  const [grassland, setGrassland] = useAtom(grasslandAtom);
-  const currentSpace = grassland[space];
+  //wetland states
+  const [wetland, setWetland] = useAtom(wetlandAtom);
+  const currentSpace = wetland[space];
 
   //current action
   const [currentAction, setCurrentAction] = useAtom(currentActionAtom);
@@ -58,8 +58,8 @@ const GrasslandPlayedBirdCard = ({ space }) => {
           //logic to check if can place eggs on other birds, if not, discards extra eggs
         } else {
           console.log("placed egg");
-          //update state in grassland for bird egg count
-          layEgg(setGrassland, space, setResourceQuantity);
+          //update state in wetland for bird egg count
+          layEgg(setWetland, space, setResourceQuantity);
 
           if (resourceQuantity === 1) {
             console.log("No more eggs to place");
@@ -72,7 +72,7 @@ const GrasslandPlayedBirdCard = ({ space }) => {
           console.log("no eggs to discard");
         } else {
           console.log("removed egg from bird");
-          removeEgg(setGrassland, space, setResourceQuantity);
+          removeEgg(setWetland, space, setResourceQuantity);
           setDisabledStates((prev) => ({
             ...prev,
             playedBird: true,
@@ -97,4 +97,4 @@ const GrasslandPlayedBirdCard = ({ space }) => {
   );
 };
 
-export default GrasslandPlayedBirdCard;
+export default WetlandPlayedBirdCard;

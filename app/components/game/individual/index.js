@@ -10,6 +10,8 @@ import SelectedFoodToken from "./SelectedFoodToken";
 import Egg from "./Egg";
 import ActionSpace from "./ActionSpace";
 import ForestPlayedBirdCard from "./ForestPlayedBirdCard";
+import GrasslandPlayedBirdCard from "./GrasslandPlayedBirdCard";
+import WetlandPlayedBirdCard from "./WetlandPlayedBirdCard";
 
 export {
   BirdCard,
@@ -24,4 +26,6 @@ export {
   Egg,
   ActionSpace,
   ForestPlayedBirdCard,
+  GrasslandPlayedBirdCard,
+  WetlandPlayedBirdCard,
 };
