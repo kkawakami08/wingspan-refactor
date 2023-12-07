@@ -52,3 +52,15 @@ export const resetGrassland = ({
   setDisableSelection(initialDisableSelectionState);
   setResourceQuantity(0);
 };
+
+export const removeEggToPlayBird = (setHabitat, space, setResourceQuantity) => {
+  //update forest[space].eggCount --
+  setHabitat((prev) => ({
+    ...prev,
+    [space]: {
+      ...prev[space],
+      eggCount: prev[space].eggCount - 1,
+    },
+  }));
+  setResourceQuantity((prev) => prev - 1);
+};

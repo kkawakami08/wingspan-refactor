@@ -84,14 +84,16 @@ const grassland = () => {
 
   return (
     <div
-      className="bg-amber-500 py-5 flex flex-col gap-3"
+      className="bg-amber-500 py-5 grid grid-cols-7 items-center justify-items-center "
       onClick={grasslandClick}
     >
-      <p className="font-bold text-2xl text-center">Grassland</p>
-      <p className="text-center font-xl">
-        Can currently gain {resourceQuantity} eggs
-      </p>
-      <div className="flex justify-center gap-5 px-5">{grasslandContent}</div>
+      <div>
+        <p className="font-bold text-2xl text-center">Grassland</p>
+        <p className="text-center font-xl">
+          Can currently gain {resourceQuantity} eggs
+        </p>
+      </div>
+      <div className="col-span-6 grid grid-cols-6 px-5">{grasslandContent}</div>
     </div>
   );
 };

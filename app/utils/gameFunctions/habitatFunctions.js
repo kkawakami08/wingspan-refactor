@@ -136,37 +136,37 @@ export const activateHabitat = (
   habitatDiscardStates,
   habitatEnableStates
 ) => {
-  if (currentAction === "playABird") {
-    console.log(`Selected ${location}. pick a bird now`);
-    setHabitat(location);
+  //   if (currentAction === "playABird") {
+  // //check egg req
+
+  //     console.log(`Selected ${location}. pick a bird now`);
+  //     setHabitat(location);
+  //     setDisabledStates((draft) => ({
+  //       ...draft,
+
+  //       birdHand: false,
+  //     }));
+  //   } else {
+  setDisabledStates(initialDisabledStates);
+
+  setCurrentAction(location);
+
+  if (currentSpaceAction.discard !== "none") {
     setDisabledStates((draft) => ({
       ...draft,
-
-      birdHand: false,
+      ...habitatDiscardStates,
     }));
+    console.log(`current action is ${location} can discard for extra resource`);
   } else {
-    setDisabledStates(initialDisabledStates);
-
-    setCurrentAction(location);
-
-    if (currentSpaceAction.discard !== "none") {
-      setDisabledStates((draft) => ({
-        ...draft,
-        ...habitatDiscardStates,
-      }));
-      console.log(
-        `current action is ${location} can discard for extra resource`
-      );
-    } else {
-      setDisabledStates((draft) => ({
-        ...draft,
-        ...habitatEnableStates,
-      }));
-      console.log(`current action is ${location}`);
-    }
-    setResourceQuantity(currentSpaceAction.quantity);
+    setDisabledStates((draft) => ({
+      ...draft,
+      ...habitatEnableStates,
+    }));
+    console.log(`current action is ${location}`);
   }
+  setResourceQuantity(currentSpaceAction.quantity);
 };
+// };
 
 export const playBird = (selectedFood, selectedBird, birdFoodReq) => {
   let foodCount = [];

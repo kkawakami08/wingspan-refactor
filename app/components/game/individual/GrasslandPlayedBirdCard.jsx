@@ -5,6 +5,7 @@ import {
   disabledStatesAtom,
   grasslandAtom,
   gainResourceQuantityAtom,
+  totalEggCountAtom,
 } from "../../../utils/jotaiStore";
 import {
   layEgg,
@@ -30,8 +31,8 @@ const GrasslandPlayedBirdCard = ({ space }) => {
     gainResourceQuantityAtom
   );
 
-  //initial eggs on this bird for if want to reset
-  const eggCount = currentSpace.eggCount;
+  //cumulative egg count on mat
+  const [totalEggCount, setTotalEggCount] = useAtom(totalEggCountAtom);
 
   //for resetting
   const resetGrasslandObj = {
@@ -60,7 +61,7 @@ const GrasslandPlayedBirdCard = ({ space }) => {
           console.log("placed egg");
           //update state in grassland for bird egg count
           layEgg(setGrassland, space, setResourceQuantity);
-
+          setTotalEggCount((prev) => prev + 1);
           if (resourceQuantity === 1) {
             console.log("No more eggs to place");
             resetGrassland(resetGrasslandObj);
@@ -73,6 +74,7 @@ const GrasslandPlayedBirdCard = ({ space }) => {
         } else {
           console.log("removed egg from bird");
           removeEgg(setGrassland, space, setResourceQuantity);
+          setTotalEggCount((prev) => prev - 1);
           setDisabledStates((prev) => ({
             ...prev,
             playedBird: true,
@@ -88,7 +90,7 @@ const GrasslandPlayedBirdCard = ({ space }) => {
       onClick={playedBirdCardClick}
     >
       <p className="bg-emerald-900 text-white text-center p-3 text-sm rounded-lg">
-        Eggs on this bird: {eggCount}
+        Eggs on this bird: {currentSpace.eggCount}
       </p>
       <p className=" text-lg">{currentSpace.bird.common_name}</p>
       <div className="flex gap-3">{foodReqContent}</div>

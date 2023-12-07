@@ -3,7 +3,7 @@ import {
   grasslandAtom,
   grasslandBirdCountAtom,
 } from "../../../utils/jotaiStore";
-import { GrasslandPlayedBirdCard } from "./";
+import { GrasslandPlayedBirdCard, ActionSpace } from "./";
 
 const GrasslandActionSpace = ({ space }) => {
   const [grassland] = useAtom(grasslandAtom);
@@ -19,15 +19,11 @@ const GrasslandActionSpace = ({ space }) => {
     return <GrasslandPlayedBirdCard space={space} />;
   } else {
     return (
-      <div className={activeCSS}>
-        <p>Space {space}</p>
-        <p>
-          Gain {currentSpace.action.quantity} {currentSpace.action.type}
-        </p>
-        {currentSpace.action.discard !== "none" && (
-          <p>Discard {currentSpace.action.discard}</p>
-        )}
-      </div>
+      <ActionSpace
+        activeCSS={activeCSS}
+        currentSpace={currentSpace.action}
+        space={space}
+      />
     );
   }
 };

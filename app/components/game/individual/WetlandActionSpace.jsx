@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { wetlandAtom, wetlandBirdCountAtom } from "../../../utils/jotaiStore";
-import { WetlandPlayedBirdCard } from "./";
+import { WetlandPlayedBirdCard, ActionSpace } from "./";
 
 const WetlandActionSpace = ({ space }) => {
   const [wetland] = useAtom(wetlandAtom);
@@ -16,15 +16,11 @@ const WetlandActionSpace = ({ space }) => {
     return <WetlandPlayedBirdCard space={space} />;
   } else {
     return (
-      <div className={activeCSS}>
-        <p>Space {space}</p>
-        <p>
-          Gain {currentSpace.action.quantity} {currentSpace.action.type}
-        </p>
-        {currentSpace.action.discard !== "none" && (
-          <p>Discard {currentSpace.action.discard}</p>
-        )}
-      </div>
+      <ActionSpace
+        activeCSS={activeCSS}
+        currentSpace={currentSpace.action}
+        space={space}
+      />
     );
   }
 };

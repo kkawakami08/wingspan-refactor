@@ -22,6 +22,7 @@ const PlayABird = () => {
       console.log("Disabled");
     } else {
       setDisabledStates(initialDisabledStates);
+      //check egg req
 
       setCurrentAction("playABird");
       console.log("Current action:: Play a bird. Select a habitat");
@@ -29,9 +30,17 @@ const PlayABird = () => {
   };
 
   return (
-    <div className="bg-pink-500 py-5 " onClick={playABirdClick}>
+    <div
+      className="bg-pink-500 py-5 grid grid-cols-7 items-center justify-items-center"
+      onClick={playABirdClick}
+    >
       <p className="font-bold text-2xl text-center ">Play A Bird</p>
-      {selectedHabitat !== "" && <p>Selected Habitat: {selectedHabitat}</p>}
+      <p>No egg</p>
+      <p>One egg</p>
+      <p>One egg</p>
+      <p>Two egg</p>
+      <p>Two egg</p>
+      <p>Max</p>
     </div>
   );
 };
