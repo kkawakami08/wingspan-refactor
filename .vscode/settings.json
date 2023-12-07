@@ -30,7 +30,9 @@
     "app/entry.server.jsx": true,
     "app/root.jsx": true,
     "app/styles": true,
-    "app/routes": true
+    "app/routes": true,
+    "app/components/hydration": true,
+    "app/utils/hydration": true
   },
   "hide-files.files": [
     ".cache",
@@ -57,6 +59,8 @@
     "app/entry.server.jsx",
     "app/root.jsx",
     "app/styles",
-    "app/routes"
+    "app/routes",
+    "app/components/hydration",
+    "app/utils/hydration"
   ]
 }

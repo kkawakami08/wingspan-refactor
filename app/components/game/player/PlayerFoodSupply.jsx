@@ -13,7 +13,7 @@ const PlayerFoodSupply = () => {
   ));
 
   return (
-    <div>
+    <div className="flex flex-col gap-5">
       <p>Player food</p>
       <div className="flex gap-3">{foodSupplyContent}</div>
     </div>

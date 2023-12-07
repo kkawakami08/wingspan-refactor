@@ -73,18 +73,18 @@ const grassland = () => {
     if (grasslandDisable) {
       console.log("disabled");
     } else {
-      if (birdCountCheck) {
-        console.log("can't place any eggs, pick diff habitat to play");
+      if (currentAction === "playABird") {
+        eggReqCheck(
+          grasslandBirdEggReq,
+          "grassland",
+          setDisabledStates,
+          totalEggCount,
+          setResourceQuantity,
+          setHabitat
+        );
       } else {
-        if (currentAction === "playABird") {
-          eggReqCheck(
-            grasslandBirdEggReq,
-            "grassland",
-            setDisabledStates,
-            totalEggCount,
-            setResourceQuantity,
-            setHabitat
-          );
+        if (birdCountCheck) {
+          console.log("can't place any eggs, pick diff habitat to play");
         } else {
           activateHabitat(
             "grassland",

@@ -6,6 +6,7 @@ import {
   birdHandAtom,
   selectedBirdsAtom,
   disableSelectionAtom,
+  selectedHabitatAtom,
 } from "../../../utils/jotaiStore";
 import { cardSelection } from "../../../utils/gameFunctions/generalFunctions";
 
@@ -22,13 +23,20 @@ const BirdCard = ({ bird }) => {
   //current action
   const [currentAction] = useAtom(currentActionAtom);
 
-  //eggs
-  const [eggCount, setEggCount] = useState(bird.egg_limit);
+  //current habitat for play a bird action
+  const [selectedHabitat] = useAtom(selectedHabitatAtom);
 
   //food reqs
   const foodReqContent = bird.food.map((food, index) => (
     <p key={index} className="bg-cyan-900 text-white p-2 rounded-lg">
       {food}
+    </p>
+  ));
+
+  //habitat
+  const habitatContent = bird.habitat.map((habitat, index) => (
+    <p key={index} className="bg-emerald-900 text-white p-2 rounded-lg">
+      {habitat}
     </p>
   ));
 
@@ -51,17 +59,23 @@ const BirdCard = ({ bird }) => {
           setDisableSelection((prev) => ({ ...prev, bird: true }));
         }
       } else if (currentAction === "playABird") {
-        cardSelection(
-          birdHand,
-          "common_name",
-          bird.common_name,
-          setSelectedBirds,
-          setBirdHand
-        );
-        if (selectedBirds.length + 1 === 1) {
-          setDisableSelection((prev) => ({ ...prev, bird: false }));
+        //if bird habitat includes selected habitat
+        if (bird.habitat.includes(selectedHabitat)) {
+          console.log(`Can play this bird in ${selectedHabitat}`);
+          cardSelection(
+            birdHand,
+            "common_name",
+            bird.common_name,
+            setSelectedBirds,
+            setBirdHand
+          );
+          if (selectedBirds.length + 1 === 1) {
+            setDisableSelection((prev) => ({ ...prev, bird: false }));
+          } else {
+            setDisableSelection((prev) => ({ ...prev, bird: true }));
+          }
         } else {
-          setDisableSelection((prev) => ({ ...prev, bird: true }));
+          console.log("can't play bird here. Pick a different bird");
         }
       } else if (currentAction === "grassland") {
         console.log("Placed eggs on this bird");
@@ -73,11 +87,13 @@ const BirdCard = ({ bird }) => {
 
   return (
     <div
-      className="bg-cyan-500 p-5 rounded-lg border-2 border-cyan-900 text-center flex flex-col gap-2"
+      className="bg-cyan-500 p-5 rounded-lg border-2 border-cyan-900 text-center flex flex-col gap-2 w-56 h-72 justify-between"
       onClick={birdCardClick}
     >
       <p className=" text-lg">{bird.common_name}</p>
-      <div className="flex gap-3">{foodReqContent}</div>
+      <div className="flex gap-3">{habitatContent}</div>
+      <div className="flex gap-3 flex-wrap">{foodReqContent}</div>
+
       <p>Egg Limit: {bird.egg_limit}</p>
     </div>
   );

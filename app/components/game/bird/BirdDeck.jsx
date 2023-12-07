@@ -72,7 +72,7 @@ const BirdDeck = () => {
   return (
     <div>
       <div
-        className="bg-cyan-500 p-5 rounded-lg border-2 border-cyan-900 w-40"
+        className="bg-cyan-500 p-5 rounded-lg border-2 border-cyan-900 w-56 h-72"
         onClick={birdDeckClick}
       >
         <p>Bird Deck</p>

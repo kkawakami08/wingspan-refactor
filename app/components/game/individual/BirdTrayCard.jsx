@@ -31,6 +31,13 @@ const BirdTrayCard = ({ bird }) => {
     </p>
   ));
 
+  //habitat
+  const habitatContent = bird.habitat.map((habitat, index) => (
+    <p key={index} className="bg-emerald-900 text-white p-2 rounded-lg">
+      {habitat}
+    </p>
+  ));
+
   const birdTrayCardClick = () => {
     if (disableBirdTray) {
       console.log("Cant click");
@@ -56,11 +63,13 @@ const BirdTrayCard = ({ bird }) => {
 
   return (
     <div
-      className="bg-cyan-500 p-5 rounded-lg border-2 border-cyan-900"
+      className="bg-cyan-500 p-5 rounded-lg border-2 border-cyan-900 flex flex-col gap-3  w-56 h-72 justify-between"
       onClick={birdTrayCardClick}
     >
-      <p>{bird.common_name}</p>
+      <p className="text-lg">{bird.common_name}</p>
+      <div className="flex gap-3 flex-wrap">{habitatContent}</div>
       <div className="flex gap-3 flex-wrap">{foodReqContent}</div>
+      <p>Egg Limit: {bird.egg_limit}</p>
     </div>
   );
 };
