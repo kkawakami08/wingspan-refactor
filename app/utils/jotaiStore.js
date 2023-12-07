@@ -37,6 +37,8 @@ export const wetlandBirdCountAtom = atom(0);
 
 //habitat play a bird egg req
 export const forestBirdEggReqAtom = atom(0);
+export const grasslandBirdEggReqAtom = atom(0);
+export const wetlandBirdEggReqAtom = atom(0);
 
 //resource gain amount
 export const gainResourceQuantityAtom = atom(0);

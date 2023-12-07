@@ -8,8 +8,13 @@ import {
   gainResourceQuantityAtom,
   disableSelectionAtom,
   selectedHabitatAtom,
+  wetlandBirdEggReqAtom,
+  totalEggCountAtom,
 } from "../../../utils/jotaiStore";
-import { activateHabitat } from "../../../utils/gameFunctions/habitatFunctions";
+import {
+  activateHabitat,
+  eggReqCheck,
+} from "../../../utils/gameFunctions/habitatFunctions";
 import {
   initialDisabledStates,
   initialDisableSelectionState,
@@ -20,11 +25,15 @@ const wetland = () => {
   const [wetland] = useAtom(wetlandAtom);
   const [birdCount] = useAtom(wetlandBirdCountAtom);
   const currentSpace = wetland[birdCount];
+  const [wetlandBirdEggReq] = useAtom(wetlandBirdEggReqAtom);
 
   const wetlandArray = Object.keys(wetland);
   const wetlandContent = wetlandArray.map((space) => (
     <WetlandActionSpace key={space} space={space} />
   ));
+
+  //total egg count
+  const [totalEggCount] = useAtom(totalEggCountAtom);
 
   //set current action
   const [currentAction, setCurrentAction] = useAtom(currentActionAtom);
@@ -60,17 +69,26 @@ const wetland = () => {
     if (wetlandDisable) {
       console.log("Disabled");
     } else {
-      activateHabitat(
-        currentAction,
-        setHabitat,
-        "wetland",
-        setDisabledStates,
-        setCurrentAction,
-        currentSpace.action,
-        setResourceQuantity,
-        wetlandDiscardStates,
-        wetlandEnableState
-      );
+      if (currentAction === "playABird") {
+        eggReqCheck(
+          wetlandBirdEggReq,
+          "wetland",
+          setDisabledStates,
+          totalEggCount,
+          setResourceQuantity,
+          setHabitat
+        );
+      } else {
+        activateHabitat(
+          "wetland",
+          setDisabledStates,
+          setCurrentAction,
+          currentSpace.action,
+          setResourceQuantity,
+          wetlandDiscardStates,
+          wetlandEnableState
+        );
+      }
     }
   };
 

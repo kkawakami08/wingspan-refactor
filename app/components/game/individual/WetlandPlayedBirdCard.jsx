@@ -11,6 +11,7 @@ import {
   layEgg,
   resetGrassland,
   removeEgg,
+  removeEggToPlayBird,
 } from "../../../utils/gameFunctions/eggFunctions";
 
 const WetlandPlayedBirdCard = ({ space }) => {
@@ -79,6 +80,25 @@ const WetlandPlayedBirdCard = ({ space }) => {
             ...prev,
             playedBird: true,
           }));
+        }
+      } else if (currentAction === "playABird") {
+        if (currentSpace.eggCount === 0) {
+          console.log("no eggs to discard");
+        } else {
+          console.log("removed egg from bird");
+          removeEggToPlayBird(setWetland, space, setResourceQuantity);
+          setTotalEggCount((prev) => prev - 1);
+          console.log("remaining eggs needed", resourceQuantity - 1);
+          if (resourceQuantity - 1 === 0) {
+            console.log("can now pick a bird to play");
+            setHabitat("wetland");
+            setDisabledStates((draft) => ({
+              ...draft,
+
+              birdHand: false,
+              playedBird: true,
+            }));
+          }
         }
       }
     }

@@ -126,8 +126,6 @@ export const updateHabitat = (
 };
 
 export const activateHabitat = (
-  currentAction,
-  setHabitat,
   location,
   setDisabledStates,
   setCurrentAction,
@@ -136,17 +134,6 @@ export const activateHabitat = (
   habitatDiscardStates,
   habitatEnableStates
 ) => {
-  //   if (currentAction === "playABird") {
-  // //check egg req
-
-  //     console.log(`Selected ${location}. pick a bird now`);
-  //     setHabitat(location);
-  //     setDisabledStates((draft) => ({
-  //       ...draft,
-
-  //       birdHand: false,
-  //     }));
-  //   } else {
   setDisabledStates(initialDisabledStates);
 
   setCurrentAction(location);
@@ -210,4 +197,50 @@ export const playBird = (selectedFood, selectedBird, birdFoodReq) => {
   }
   return continueAction;
   //
+};
+
+export const eggReqCheck = (
+  habitatBirdEggReq,
+  location,
+  setDisabledStates,
+  totalEggCount,
+  setResourceQuantity,
+  setHabitat
+) => {
+  if (habitatBirdEggReq === 0) {
+    console.log("Don't need any eggs to play bird in this space, good to go");
+    setHabitat(location);
+    setDisabledStates((draft) => ({
+      ...draft,
+
+      birdHand: false,
+      habitats: true,
+    }));
+  } else if (habitatBirdEggReq === 1) {
+    if (totalEggCount < 1) {
+      console.log("not enough eggs to play this bird");
+    } else {
+      console.log("discard an egg please");
+      setResourceQuantity(1);
+      setDisabledStates((prev) => ({
+        ...prev,
+        playedBird: false,
+        habitats: true,
+      }));
+    }
+  } else if (habitatBirdEggReq === 2) {
+    if (totalEggCount < 2) {
+      console.log("not enough eggs to play this bird");
+    } else {
+      console.log("discard two eggs please");
+      setResourceQuantity(2);
+      setDisabledStates((prev) => ({
+        ...prev,
+        playedBird: false,
+        habitats: true,
+      }));
+    }
+  } else {
+    console.log("Can't place any more birds in this habitat");
+  }
 };

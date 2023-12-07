@@ -9,13 +9,19 @@ import {
   wetlandBirdCountAtom,
   forestBirdCountAtom,
   gainResourceQuantityAtom,
+  grasslandBirdEggReqAtom,
+  totalEggCountAtom,
 } from "../../../utils/jotaiStore";
-import { activateHabitat } from "../../../utils/gameFunctions/habitatFunctions";
+import {
+  activateHabitat,
+  eggReqCheck,
+} from "../../../utils/gameFunctions/habitatFunctions";
 
 const grassland = () => {
   //grassland state
   const [grassland] = useAtom(grasslandAtom);
   const [birdCount] = useAtom(grasslandBirdCountAtom);
+  const [grasslandBirdEggReq] = useAtom(grasslandBirdEggReqAtom);
 
   const grasslandArray = Object.keys(grassland);
   const grasslandContent = grasslandArray.map((space) => (
@@ -25,6 +31,9 @@ const grassland = () => {
   //set current action
   const [currentAction, setCurrentAction] = useAtom(currentActionAtom);
   const currentSpace = grassland[birdCount];
+
+  //total egg count
+  const [totalEggCount] = useAtom(totalEggCountAtom);
 
   //resource quantity
   const [resourceQuantity, setResourceQuantity] = useAtom(
@@ -67,17 +76,26 @@ const grassland = () => {
       if (birdCountCheck) {
         console.log("can't place any eggs, pick diff habitat to play");
       } else {
-        activateHabitat(
-          currentAction,
-          setHabitat,
-          "grassland",
-          setDisabledStates,
-          setCurrentAction,
-          currentSpace.action,
-          setResourceQuantity,
-          grasslandDiscardStates,
-          grasslandEnableState
-        );
+        if (currentAction === "playABird") {
+          eggReqCheck(
+            grasslandBirdEggReq,
+            "grassland",
+            setDisabledStates,
+            totalEggCount,
+            setResourceQuantity,
+            setHabitat
+          );
+        } else {
+          activateHabitat(
+            "grassland",
+            setDisabledStates,
+            setCurrentAction,
+            currentSpace.action,
+            setResourceQuantity,
+            grasslandDiscardStates,
+            grasslandEnableState
+          );
+        }
       }
     }
   };

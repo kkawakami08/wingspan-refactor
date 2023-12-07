@@ -10,7 +10,10 @@ import {
   totalEggCountAtom,
   forestBirdEggReqAtom,
 } from "../../../utils/jotaiStore";
-import { activateHabitat } from "../../../utils/gameFunctions/habitatFunctions";
+import {
+  activateHabitat,
+  eggReqCheck,
+} from "../../../utils/gameFunctions/habitatFunctions";
 
 const Forest = () => {
   //forest state
@@ -63,45 +66,16 @@ const Forest = () => {
       console.log("disabled");
     } else {
       if (currentAction === "playABird") {
-        if (forestBirdEggReq === 0) {
-          console.log("Don't need any eggs to play bird in this space");
-          setHabitat("forest");
-          setDisabledStates((draft) => ({
-            ...draft,
-
-            birdHand: false,
-          }));
-        } else if (forestBirdEggReq === 1) {
-          if (totalEggCount < 1) {
-            console.log("not enough eggs to play this bird");
-          } else {
-            console.log("discard an egg please");
-            setResourceQuantity(1);
-            setDisabledStates((prev) => ({
-              ...prev,
-              playedBird: false,
-              habitats: true,
-            }));
-          }
-        } else if (forestBirdEggReq === 2) {
-          if (totalEggCount < 2) {
-            console.log("not enough eggs to play this bird");
-          } else {
-            console.log("discard two eggs please");
-            setResourceQuantity(2);
-            setDisabledStates((prev) => ({
-              ...prev,
-              playedBird: false,
-              habitats: true,
-            }));
-          }
-        } else {
-          console.log("Can't place any more birds in this habitat");
-        }
+        eggReqCheck(
+          forestBirdEggReq,
+          "forest",
+          setDisabledStates,
+          totalEggCount,
+          setResourceQuantity,
+          setHabitat
+        );
       } else {
         activateHabitat(
-          currentAction,
-          setHabitat,
           "forest",
           setDisabledStates,
           setCurrentAction,

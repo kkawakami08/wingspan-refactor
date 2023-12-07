@@ -11,6 +11,7 @@ import {
   layEgg,
   resetGrassland,
   removeEgg,
+  removeEggToPlayBird,
 } from "../../../utils/gameFunctions/eggFunctions";
 
 const GrasslandPlayedBirdCard = ({ space }) => {
@@ -79,6 +80,25 @@ const GrasslandPlayedBirdCard = ({ space }) => {
             ...prev,
             playedBird: true,
           }));
+        }
+      } else if (currentAction === "playABird") {
+        if (currentSpace.eggCount === 0) {
+          console.log("no eggs to discard");
+        } else {
+          console.log("removed egg from bird");
+          removeEggToPlayBird(setGrassland, space, setResourceQuantity);
+          setTotalEggCount((prev) => prev - 1);
+          console.log("remaining eggs needed", resourceQuantity - 1);
+          if (resourceQuantity - 1 === 0) {
+            console.log("can now pick a bird to play");
+            setHabitat("grassland");
+            setDisabledStates((draft) => ({
+              ...draft,
+
+              birdHand: false,
+              playedBird: true,
+            }));
+          }
         }
       }
     }
