@@ -6,6 +6,7 @@ import {
   grasslandAtom,
   gainResourceQuantityAtom,
   totalEggCountAtom,
+  selectedHabitatAtom,
 } from "../../../utils/jotaiStore";
 import {
   layEgg,
@@ -26,6 +27,9 @@ const GrasslandPlayedBirdCard = ({ space }) => {
 
   //current action
   const [currentAction, setCurrentAction] = useAtom(currentActionAtom);
+
+  //set habitat for play a bird
+  const [, setHabitat] = useAtom(selectedHabitatAtom);
 
   //resource quantity
   const [resourceQuantity, setResourceQuantity] = useAtom(

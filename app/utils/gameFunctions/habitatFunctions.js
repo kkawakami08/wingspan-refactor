@@ -1,3 +1,4 @@
+import { current } from "immer";
 import { initialDisabledStates } from "../../data/initialData";
 
 export const checkEnoughFood = (playedBird, playerFoodSupply) => {
@@ -32,6 +33,28 @@ export const checkEnoughFood = (playedBird, playerFoodSupply) => {
       wildDouble["wild"] = playedBirdFoodCount[food];
       console.log("updated checkfood", checkLater);
       canContinue = false;
+    } else if (food === "seed" || food === "invertebrate") {
+      console.log(`Checking ${food}`);
+      if (playerCheck["invertebrate_seed"]) {
+        console.log("Can use invertebrate_seed here");
+        playerCheck["invertebrate_seed"] = playerCheck["invertebrate_seed"] - 1;
+      } else {
+        if (
+          !playerCheck[food] ||
+          playerCheck[food] < playedBirdFoodCount[food]
+        ) {
+          console.log(
+            `Not enough ${food} in your supply. Adding to checkLater`
+          );
+          checkLater[food] = playedBirdFoodCount[food];
+          console.log("Current check", checkLater);
+          canContinue = false;
+        } else {
+          console.log("removing one from wildPlayer");
+          playerCheck[food] = playerCheck[food] - 1;
+          console.log("updated playercheck", playerCheck);
+        }
+      }
     } else {
       console.log(`Checking ${food}`);
       console.log("player[food]", playerCheck[food]);
@@ -166,6 +189,18 @@ export const playBird = (selectedFood, selectedBird, birdFoodReq) => {
   for (let i = 0; i < selectedBird.food.length; i++) {
     let currentItem = selectedBird.food[i];
     if (currentItem === "wild") continue;
+    if (
+      foodCount.includes("invertebrate_seed") &&
+      (currentItem === "seed" || currentItem === "invertebrate")
+    ) {
+      console.log("using invertebrate_seed token for ", currentItem);
+      const index = foodCount.indexOf("invertebrate_seed");
+      console.log(index);
+
+      foodCount.splice(index, 1);
+
+      continue;
+    }
     const index = foodCount.indexOf(currentItem);
     console.log(index);
     if (index >= 0) {

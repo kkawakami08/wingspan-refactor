@@ -18,6 +18,8 @@ import {
   birdFoodReqAtom,
   selectedHabitatAtom,
   forestBirdEggReqAtom,
+  grasslandBirdEggReqAtom,
+  wetlandBirdEggReqAtom,
 } from "../../../utils/jotaiStore";
 import { SelectedFoodToken } from "../individual";
 import {
@@ -47,6 +49,8 @@ const SelectedFood = () => {
 
   //habitat egg req
   const [, setForestBirdEggReq] = useAtom(forestBirdEggReqAtom);
+  const [, setGrasslandBirdEggReq] = useAtom(grasslandBirdEggReqAtom);
+  const [, setWetlandBirdEggReq] = useAtom(wetlandBirdEggReqAtom);
 
   const forestHabitat = {
     setHabitat: setForest,
@@ -130,11 +134,21 @@ const SelectedFood = () => {
           case "grassland":
             console.log("adding bird to grassland");
             updateHabitat(grasslandHabitat, selectedBirds[0]);
+            if (grasslandBirdCount === 0 || grasslandBirdCount === 2) {
+              setGrasslandBirdEggReq((prev) => prev + 1);
+            } else if (grasslandBirdCount === 5) {
+              setGrasslandBirdEggReq(3);
+            }
             resetStates(resetStatesObj);
             break;
           case "wetland":
             console.log("adding bird to wetland");
             updateHabitat(wetlandHabitat, selectedBirds[0]);
+            if (wetlandBirdCount === 0 || wetlandBirdCount === 2) {
+              setWetlandBirdEggReq((prev) => prev + 1);
+            } else if (wetlandBirdCount === 5) {
+              setWetlandBirdEggReq(3);
+            }
             resetStates(resetStatesObj);
             break;
         }

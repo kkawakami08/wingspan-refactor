@@ -7,6 +7,7 @@ import {
   gainResourceQuantityAtom,
   totalEggCountAtom,
   selectedHabitatAtom,
+  selectedBirdsAtom,
 } from "../../../utils/jotaiStore";
 
 import {
@@ -39,6 +40,9 @@ const ForestPlayedBirdCard = ({ space }) => {
 
   //set habitat to play bird
   const [, setHabitat] = useAtom(selectedHabitatAtom);
+
+  //selected birds
+  const [selectedBirds] = useAtom(selectedBirdsAtom);
 
   //for resetting
   const resetGrasslandObj = {
@@ -86,6 +90,29 @@ const ForestPlayedBirdCard = ({ space }) => {
             ...prev,
             playedBird: true,
           }));
+          if (selectedBirds.length === resourceQuantity + 1) {
+            console.log(
+              "long enough",
+              selectedBirds.length,
+              "length of bird",
+              resourceQuantity
+            );
+            setDisableSelection((prev) => ({
+              ...prev,
+              bird: false,
+            }));
+          } else {
+            console.log(
+              "not long enough",
+              selectedBirds.length,
+              "length of bird",
+              resourceQuantity
+            );
+            setDisableSelection((prev) => ({
+              ...prev,
+              bird: true,
+            }));
+          }
         }
       } else if (currentAction === "playABird") {
         if (currentSpace.eggCount === 0) {

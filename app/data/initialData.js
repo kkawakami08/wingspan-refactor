@@ -7,7 +7,7 @@ export const playerFoodSupply = [
   { type: "fruit", id: nanoid() },
   { type: "fish", id: nanoid() },
   { type: "rodent", id: nanoid() },
-  { type: "invertebrate", id: nanoid() },
+  { type: "invertebrate_seed", id: nanoid() },
 ];
 
 const createInitialHabitat = (resource, discard, startingQuantity) => {

@@ -6,6 +6,7 @@ import {
   wetlandAtom,
   gainResourceQuantityAtom,
   totalEggCountAtom,
+  selectedHabitatAtom,
 } from "../../../utils/jotaiStore";
 import {
   layEgg,
@@ -26,6 +27,9 @@ const WetlandPlayedBirdCard = ({ space }) => {
 
   //current action
   const [currentAction, setCurrentAction] = useAtom(currentActionAtom);
+
+  //set selected habitat for play a bird
+  const [, setHabitat] = useAtom(selectedHabitatAtom);
 
   //resource quantity
   const [resourceQuantity, setResourceQuantity] = useAtom(
